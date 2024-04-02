@@ -1,0 +1,53 @@
+header {
+    padding: 1.5em 1.5em 0 1.5em;
+    margin-bottom: 1em;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1em;
+}
+
+header .logo {
+    width: 3em;
+    height: 3em;
+}
+
+.logo {
+    fill: url(#GradientFill);
+    width: 1.5em;
+    height: 1.5em;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.logo stop {
+    transition: 0.4s ease;
+}
+
+.logo:hover stop:first-child {
+    stop-color: #0d848d;
+}
+
+.logo:hover stop:last-child {
+    stop-color: #39a9db;
+}
+
+header h1.title {
+    font-size: 2em;
+    color: #2f8d0d;
+
+    margin: 0;
+}
+
+header nav {
+    flex-grow: 1;
+}
+
+main {
+    padding: 0 1.5em;
+}
+
+h1 {
+    color: #0d848d;
+}

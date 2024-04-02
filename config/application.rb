@@ -8,6 +8,14 @@ Bundler.require(*Rails.groups)
 
 module WildLoops
   class Application < Rails::Application
+    # Adding cookies and session middleware
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+
+    # Use SameSite=Strict for all cookies to help protect against CSRF
+    # https://owasp.org/www-community/SameSite
+    config.action_dispatch.cookies_same_site_protection = :none
+    config.action_dispatch.session_same_site_protection = :none
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 
@@ -15,7 +23,7 @@ module WildLoops
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w(assets tasks))
-    
+
     # Load S3 credentials
     config.before_configuration do
       env_file = File.join(Rails.root, 'config', 'local_env.yml') 
