@@ -1,0 +1,47 @@
+#S3 bucket setup
+$s3_client = Aws::S3::Client.new
+$bucket_name = "wild-loops"
+$presigner = Aws::S3::Presigner.new(client: $s3_client)
+$objects = $s3_client.list_objects_v2(bucket: $bucket_name, prefix: "trails/").contents
+$image_keys = $objects.map { |obj| [File.basename(obj.key, ".*"), obj.key] }.to_h
+
+class TrailsController < ApplicationController
+  rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+
+
+  def index
+    trails = Trail.all
+
+    trails_with_images = trails.map do |trail|
+      image_key = $image_keys[trail.name]
+      image_url = image_key ? $presigner.presigned_url(:get_object, bucket: $bucket_name, key: image_key, expires_in: 3600) : nil
+      trail.as_json(include: [:users, :reports]).merge(image_url: image_url)
+    end
+
+    render json: trails_with_images, include: [:users, :reports]
+  end
+
+  def show
+    trail = find_trail
+    image_key = $image_keys[trail.name]
+    image_url = image_key ? $presigner.presigned_url(:get_object, bucket: $bucket_name, key: image_key, expires_in: 3600) : nil
+    trail = trail.as_json.merge(image_url: image_url)
+    render json: trail, include: [:users, :reports]
+  end
+  
+  private
+
+  def find_trail
+    Trail.find(params[:id])
+  end
+
+  def render_unprocessable_entity_response(exception)
+    render json: {errors: exception.record.errors.full_messages}, status: :unprocessable_entity
+  end
+
+  def render_not_found_response
+    render json: { error: "Trail not found" }, status: :not_found
+  end
+end
+

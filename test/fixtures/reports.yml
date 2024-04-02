@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2024-03-27
+  road_condition: MyString
+  trail_condition: MyString
+  snow: false
+  bugs: false
+  summary: MyText
+  user_id: 1
+  trail_id: 1
+
+two:
+  date: 2024-03-27
+  road_condition: MyString
+  trail_condition: MyString
+  snow: false
+  bugs: false
+  summary: MyText
+  user_id: 1
+  trail_id: 1
