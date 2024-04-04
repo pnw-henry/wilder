@@ -12,15 +12,15 @@ body {
         box-sizing: border-box;
     }
 
-    font-family: "Montserrat",
+    font-family: "Playfair Display",
     sans-serif;
 }
 
 :root {
     line-height: 1.5;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: rgb(210, 210, 210);
+    color: rgba(140, 140, 140, 0.87);
+    background-color: rgb(235, 235, 235);
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;

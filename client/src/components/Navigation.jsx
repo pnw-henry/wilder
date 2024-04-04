@@ -17,10 +17,24 @@ function Navigation() {
       <div className="login">
         {isLoggedIn && user ? (
           <div className="welcome">
-            <NavLink to="/profile">{user.name}</NavLink>
+            <NavLink
+              className={(isActive) =>
+                "nav-link" + (!isActive ? " unselected" : "")
+              }
+              to="/profile"
+            >
+              {user.name}
+            </NavLink>
           </div>
         ) : (
-          <NavLink to="/login">Login</NavLink>
+          <NavLink
+            className={(isActive) =>
+              "nav-link" + (!isActive ? " unselected" : "")
+            }
+            to="/login"
+          >
+            Login
+          </NavLink>
         )}
       </div>
     </nav>

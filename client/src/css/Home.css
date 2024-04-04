@@ -2,39 +2,244 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100vw;
+    overflow: hidden;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.upper-section {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.home-background {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    overflow: hidden;
+    /* Adjust the height as needed */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+/* Container for the search bar, making it the positioning context for the results */
+.search-container {
+    position: relative;
+    /* Consistent width */
+    width: 50%;
+    max-width: 30rem;
+    /* Ensure it's responsive */
+    margin-top: 3em;
+    margin-left: auto;
+    /* Center align */
+    margin-right: auto;
 }
 
 .home input[type="text"] {
-    width: 480px;
+    width: 100%;
     background-color: rgba(255, 255, 255, 0.85);
-    padding: 16px 24px;
-    border: solid 1px hsl(104, 10%, 80%);
-    border-radius: 28px;
-    font-size: 18px;
-
+    /* Semi-transparent white */
+    border: solid 1px hsl(0, 0%, 50%);
+    border-radius: 1.5rem;
+    padding: 1rem 1.5rem;
+    /* Round top corners only */
+    font-size: 1em;
     box-shadow: 0 4px 8px rgba(20, 20, 20, 0.2);
-
-    margin-top: 3em;
+    position: relative;
+    z-index: 2;
+    /* Ensures search bar stays above the results */
 }
 
-.trail-list {
-    width: 480px;
+.home input[type="text"]:focus {
+    border-color: #f9f9f9;
+    outline: none;
+    /* Highlight the search bar on focus */
 }
 
-.trail-card {
+/* Styles for the search results dropdown */
+.search-results {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: left;
+    position: absolute;
+    top: 100%;
+    margin-top: 1rem;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+.search-results.expanded {
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    height: auto;
+    width: 100%;
+    border: solid 1px hsl(0, 0%, 50%);
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 8px rgba(20, 20, 20, 0.2);
+    overflow-y: auto;
+    max-height: 12rem;
+    /* Maximum height when expanded */
+}
+
+.trail-preview {
+    display: flex;
+    justify-content: space-between;
+    /* This spreads the child elements to fill the available space */
+    align-items: center;
+    /* Align items vertically in the center */
+    padding: 1rem;
     border-bottom: solid 1px hsl(104, 10%, 80%);
     cursor: pointer;
 }
 
-.trail-card h2 {
-    margin-bottom: 0;
+.trail-preview:last-of-type {
+    border-bottom: none;
 }
 
-.trail-card:hover h2 {
-    color: var(--brand-blue);
+.trail-preview:hover {
+    color: #959595;
+}
+
+.trail-preview h2 {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #454545;
+    margin: 0;
+    /* Reset any default margins */
+    flex: 1;
+    /* Allows the h2 to grow and fill the space, pushing the p to the right */
+    text-align: left;
+    /* Ensures text alignment to the left */
+}
+
+.trail-preview p {
+    font-size: 0.9em;
+    color: #666;
+    margin: 0;
+    /* Reset any default margins */
+    flex-shrink: 0;
+    /* Prevents the paragraph from shrinking below its content size */
+    text-align: right;
+    /* Ensures text alignment to the right */
+}
+
+.trail-preview h2,
+.trail-preview p {
+    margin: 5px 0;
+}
+
+.random-trails-section {
+    margin-top: 3em;
+    width: 100%;
+    padding: 0 1.5em;
+}
+
+.random-trails-section {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0 1.5rem;
+}
+
+.random-trails {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    /* Makes the grid responsive */
+    gap: 1.5rem;
+    /* Adjusts space between grid items */
+    list-style-type: none;
+    /* Removes default list styling */
+}
+
+.trail-card {
+    background-color: #ffffff;
+    /* Adds a background color to each trail preview for legibility */
+    padding: 1rem;
+    border-radius: 8px;
+    /* Softens the corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Adds a subtle shadow for depth */
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+    /* Stacks the content vertically */
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+    /* Smooth transition for hover effect */
+}
+
+.trail-card img {
+    width: 100%;
+    height: 150px;
+    /* Adjust based on your preference */
+    object-fit: cover;
+    /* Ensures the image covers the area nicely */
+}
+
+.trail-card h2 {
+    font-size: 1.2em;
+    color: #454545;
 }
 
 .trail-card p {
-    margin-top: 0;
-    color: hsl(0, 0%, 60%);
+    font-size: 0.9em;
+    color: #666;
+    margin: 0;
+    /* Reset any default margins */
+}
+
+.trail-card:hover {
+    transform: translateY(-0.5rem);
+    /* Lifts the card slightly on hover */
+}
+
+.footer {
+    width: 100%;
+    padding: 1rem 0;
+    background-color: #f2f2f2;
+    /* Light background color for the footer */
+    text-align: center;
+    /* Center the content */
+    margin-top: 3rem;
+    /* Ensures space between the content and the footer */
+    font-size: 0.9em;
+    /* Adjust the font size as needed */
+}
+
+.footer a {
+    margin: 0 1rem;
+    /* Space out the links */
+    color: #0077b5;
+    /* Example color for links */
+    text-decoration: none;
+    /* Removes underline from links */
+}
+
+.footer a:hover {
+    text-decoration: underline;
+    /* Adds an underline on hover for better link visibility */
+}
+
+.footer p {
+    margin-top: 1rem;
+    /* Space between links and the text */
+    color: #666;
+    /* Dark gray color for the text */
 }

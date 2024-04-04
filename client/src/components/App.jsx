@@ -54,18 +54,16 @@ function App() {
       <TrailsContext.Provider value={trailsContextValue}>
         <div className="App">
           <Header />
-          <main>
-            <Routes>
-              <Route path="/trails" element={<Trails />}></Route>
+          <Routes>
+            <Route path="/trails" element={<Trails />}></Route>
 
-              <Route
-                path="/login"
-                element={<Login errors={errors} setErrors={setErrors} />}
-              />
-              <Route path="/profile" element={<UserProfile />} />
-              <Route path="/" element={<Home />} />
-            </Routes>
-          </main>
+            <Route
+              path="/login"
+              element={<Login errors={errors} setErrors={setErrors} />}
+            />
+            <Route path="/profile" element={<UserProfile />} />
+            <Route path="/" element={<Home />} />
+          </Routes>
         </div>
       </TrailsContext.Provider>
     </UserContext.Provider>

@@ -6,15 +6,14 @@ function Logo() {
       fill="#000000"
       version="1.1"
       id="Capa_1"
-      xmlns="http://www.w3.org/2000/svg"
       width="800px"
       height="800px"
       viewBox="0 0 535.88 535.88"
       className="logo"
     >
       <linearGradient id="GradientFill" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="60%" stopColor="#39a9db" />
-        <stop offset="80%" stopColor="#2f8d0d" />
+        <stop offset="60%" stopColor="#e6e6e6" />
+        <stop offset="80%" stopColor="#e6e6e6" />
       </linearGradient>
       <path
         d="M171.033,114.14c19.852-3.873,32.742-23.151,28.869-43.002c-3.873-19.852-23.046-32.751-42.897-28.879
