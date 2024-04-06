@@ -1,38 +1,115 @@
-.trails header,
-.visits header {
-    padding: 0;
-
-    align-items: flex-end;
-}
-
-.trails header section,
-.visits header section {
-    flex-grow: 1;
+.all-trails {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    margin-top: 8rem;
+    padding: 0 1.5rem;
 }
 
-.trails header section h1,
-.visits header section h1 {
-    margin-bottom: 0.5em;
+.search-filters {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem 0;
 }
 
-.new-trail-form {
-    margin: 3em 0;
+.all-trails .search-bar {
+    width: 50vw;
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem 1.5rem;
+    font-size: 1em;
+    margin-bottom: 1rem;
+    position: relative;
 }
 
-.new-visit-form {
-    margin: 3em 0;
+.all-trails .search-bar:focus {
+    border-color: #f9f9f9;
+    outline: none;
 }
 
-.visit-card {
-    padding-bottom: 1em;
-    border-bottom: solid 1px hsl(104, 10%, 80%);
+.intensity-filter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.intensity-dropdown {
     cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    appearance: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.visit-card-header h3,
-.visit-card-header h4 {
-    margin: 0.5em 0;
+.all-trails .trail-list-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.all-trails .trail-card {
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+}
+
+.all-trails .trail-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.all-trails .trail-card h2 {
+    font-size: 1.2em;
+    color: #454545;
+}
+
+.all-trails .trail-card p {
+    font-size: 0.9em;
+    color: #666;
+    margin: 0;
+}
+
+.all-trails .trail-card:hover {
+    transform: translateY(-0.5rem);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.arrow {
+    cursor: pointer;
+    font-size: 24px;
+    /* Adjust size as needed */
+}
+
+.darken {
+    color: #000;
+    /* Darker color for active arrows */
+}
+
+.lighten {
+    color: #ccc;
+    /* Lighter color for inactive arrows */
+}
+
+/* Optional: Add hover effects for clickable arrows */
+.arrow.darken:hover {
+    color: #555;
+    /* Slightly lighter on hover for better interaction feedback */
 }

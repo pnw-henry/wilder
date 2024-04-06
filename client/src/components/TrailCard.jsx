@@ -1,32 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-function TrailCard({ trail, expandedTrailId, onTrailClick }) {
-  const {
-    id,
-    name,
-    location,
-    intensity,
-    length,
-    elevation_gain,
-    highest_point,
-    image_url,
-  } = trail;
-  const isExpanded = expandedTrailId === trail.id;
+function TrailCard({ trail }) {
+  const { id, name, location, image_url } = trail;
 
   return (
-    <div
-      className={`trail-card ${isExpanded ? "expanded" : ""}`}
-      onClick={() => onTrailClick(isExpanded ? null : id)}
-      tabIndex="0"
-      role="button"
-      aria-expanded={isExpanded}
-    >
-      <div className="trail-card-header">
-        <h2>{name}</h2>
-        <p>{location}</p>
-      </div>
-      {isExpanded && (
-        <div className="trail-card-body">
+    <div className="trail-card">
+      <Link to={`/trail/${id}`}>
+        <div>
           {image_url && (
             <img
               src={image_url}
@@ -35,12 +16,10 @@ function TrailCard({ trail, expandedTrailId, onTrailClick }) {
               width="400px"
             />
           )}
-          <p>Intensity: {intensity}</p>
-          <p>Length: {length} miles</p>
-          <p>Elevation Gain: {elevation_gain} feet</p>
-          <p>Highest Point: {highest_point} feet</p>
+          <h2>{name}</h2>
+          <p>{location}</p>
         </div>
-      )}
+      </Link>
     </div>
   );
 }

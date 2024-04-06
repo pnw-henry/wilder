@@ -12,8 +12,12 @@ function Header() {
   return (
     <header>
       <NavLink to="/">
-        <Logo />
-        <h1 className="title">Wild Loops</h1>
+        <h1 className="title">
+          <div className="title-part">Tr</div>
+          <Logo />
+          <div className="title-part">il</div>
+          <div className="title-part">Quest</div>
+        </h1>
       </NavLink>
       <Navigation />
     </header>

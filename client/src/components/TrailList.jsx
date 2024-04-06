@@ -1,15 +1,10 @@
 import React from "react";
 import TrailCard from "./TrailCard";
-function TrailList({ trails, expandedTrailId, onTrailClick }) {
+function TrailList({ trails }) {
   return (
-    <div className="trail-cards">
+    <div className="trail-list-grid">
       {trails.map((trail) => (
-        <TrailCard
-          key={trail.id}
-          trail={trail}
-          expandedTrailId={expandedTrailId}
-          onTrailClick={onTrailClick}
-        />
+        <TrailCard key={trail.id} trail={trail} />
       ))}
     </div>
   );

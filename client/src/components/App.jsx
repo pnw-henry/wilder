@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Route, Routes } from "react-router-dom";
-import Header from "./Header";
+import Footer from "./Footer";
 import Home from "./Home";
 import Trails from "./Trails";
+import TrailPage from "./TrailPage";
 import UserProfile from "./UserProfile";
 import Login from "./Login";
 import { UserContext } from "../context/UserContext";
@@ -53,10 +54,9 @@ function App() {
     <UserContext.Provider value={userContextValue}>
       <TrailsContext.Provider value={trailsContextValue}>
         <div className="App">
-          <Header />
           <Routes>
             <Route path="/trails" element={<Trails />}></Route>
-
+            <Route path="/trail/:trailId" element={<TrailPage />} />
             <Route
               path="/login"
               element={<Login errors={errors} setErrors={setErrors} />}
@@ -64,6 +64,7 @@ function App() {
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/" element={<Home />} />
           </Routes>
+          <Footer />
         </div>
       </TrailsContext.Provider>
     </UserContext.Provider>

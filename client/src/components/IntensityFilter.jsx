@@ -2,17 +2,17 @@ import React from "react";
 
 function IntensityFilter({ intensities, selectedIntensity, onFilterChange }) {
   return (
-    <div className="intensity-filter">
+    <select
+      value={selectedIntensity}
+      onChange={(e) => onFilterChange(e.target.value)}
+      className="intensity-dropdown"
+    >
       {intensities.map((intensity) => (
-        <button
-          key={intensity}
-          className={selectedIntensity === intensity ? "active" : ""}
-          onClick={() => onFilterChange(intensity)}
-        >
+        <option key={intensity} value={intensity}>
           {intensity}
-        </button>
+        </option>
       ))}
-    </div>
+    </select>
   );
 }
 export default IntensityFilter;

@@ -1,0 +1,33 @@
+.footer {
+    width: 100%;
+    padding: 1rem 0;
+    background-color: #f2f2f2;
+    /* Light background color for the footer */
+    text-align: center;
+    /* Center the content */
+    margin-top: 3rem;
+    /* Ensures space between the content and the footer */
+    font-size: 0.9em;
+    /* Adjust the font size as needed */
+}
+
+.footer a {
+    margin: 0 1rem;
+    /* Space out the links */
+    color: #0077b5;
+    /* Example color for links */
+    text-decoration: none;
+    /* Removes underline from links */
+}
+
+.footer a:hover {
+    text-decoration: underline;
+    /* Adds an underline on hover for better link visibility */
+}
+
+.footer p {
+    margin-top: 1rem;
+    /* Space between links and the text */
+    color: #666;
+    /* Dark gray color for the text */
+}

@@ -1,21 +1,19 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { TrailsContext } from "../context/TrailsContext";
 import SearchBar from "./SearchBar";
+import Header from "./Header";
 
 import "../css/Home.css";
 
 function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const { trails } = useContext(TrailsContext);
-  const [randomTrails, setRandomTrails] = useState([]);
+  const [shuffledTrails, setShuffledTrails] = useState([]);
+  const [displayedTrails, setDisplayedTrails] = useState([]);
   const [homeImage, setHomeImage] = useState(null);
   const [placeholderTrailImage, setPlaceholderTrailImage] = useState(null);
-
-  useEffect(() => {
-    const shuffledTrails = trails.sort(() => 0.5 - Math.random());
-    setRandomTrails(shuffledTrails.slice(0, 8));
-  }, [trails]);
+  const trailsContainerRef = useRef(null);
 
   useEffect(() => {
     fetch("/home_image")
@@ -26,6 +24,29 @@ function Home() {
       })
       .catch((error) => console.error("Failed to load home image:", error));
   }, []);
+
+  useEffect(() => {
+    const shuffledTrails = trails.sort(() => 0.5 - Math.random());
+    setShuffledTrails(shuffledTrails);
+  }, [trails]);
+
+  useEffect(() => {
+    const adjustDisplayedTrails = () => {
+      if (trailsContainerRef.current) {
+        const containerWidth = trailsContainerRef.current.offsetWidth;
+        const minCardWidth = 250; // Your trail card width + margin
+        const gap = 30; // The gap between cards
+        const maxCards = Math.floor(containerWidth / (minCardWidth + gap));
+        setDisplayedTrails(shuffledTrails.slice(0, maxCards));
+      }
+    };
+
+    adjustDisplayedTrails(); // Adjust initially
+    window.addEventListener("resize", adjustDisplayedTrails); // Adjust on resize
+
+    return () => window.removeEventListener("resize", adjustDisplayedTrails);
+  }, [shuffledTrails]);
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -36,6 +57,7 @@ function Home() {
 
   return (
     <div className="home">
+      <Header />
       <section className="upper-section">
         <div
           className="home-background"
@@ -67,9 +89,9 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="random-trails-section">
+      <section className="random-trails-section" ref={trailsContainerRef}>
         <div className="random-trails">
-          {randomTrails.map((trail) => (
+          {displayedTrails.map((trail) => (
             <div key={trail.id} className="trail-card">
               <Link to={`/trail/${trail.id}`}>
                 <img
@@ -83,24 +105,6 @@ function Home() {
           ))}
         </div>
       </section>
-      <footer className="footer">
-        <a
-          href="https://www.linkedin.com/in/pnw-henry/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          LinkedIn
-        </a>
-        <a
-          href="https://www.instagram.com/pnw.henry/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Instagram
-        </a>
-        <a href="mailto:henrye@gmail.com">Email</a>
-        <p>Made by Henry in Seattle</p>
-      </footer>
     </div>
   );
 }
