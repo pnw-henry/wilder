@@ -1,53 +1,39 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import UserLogin from "./UserLogin";
 import UserSignup from "./UserSignup";
-import { UserContext } from "../context/UserContext";
+import Header from "./Header";
 
-function Login({ errors, setErrors }) {
-  const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+import "../css/Login.css";
+
+function Login() {
   const [signUp, setSignUp] = useState(false);
 
-  function handleLogout() {
-    fetch("/logout", { method: "DELETE", credentials: "include" }).then(
-      (response) => {
-        if (response.ok) {
-          setUser(null);
-          setIsLoggedIn(false);
-        }
-      }
-    );
-  }
+  useEffect(() => {
+    document.title = "Wilder | Login";
+    window.scrollTo(0, 0);
+  }, []);
 
-  const toggleSignup = () => setSignUp(!signUp);
-
-  if (isLoggedIn && user) {
-    return (
-      <div className="welcome">
-        <h1>Welcome, {user.username}!</h1>
-        <button type="button" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-    );
-  }
+  const toggleSignup = () => setSignUp((prevSignUp) => !prevSignUp);
 
   return (
-    <div className="login-signup">
-      <div className="login-signup-button">
+    <div className="login-container">
+      <Header />
+      <div className={`login-signup ${signUp ? "show-signup" : "show-login"}`}>
         {signUp ? (
-          <UserSignup
-            errors={errors}
-            setErrors={setErrors}
-            toggleSignup={toggleSignup}
-          />
+          <UserSignup key="signup" className="user-signup-enter" />
         ) : (
-          <UserLogin
-            errors={errors}
-            setErrors={setErrors}
-            toggleSignup={toggleSignup}
-          />
+          <UserLogin key="login" className="user-login-enter" />
         )}
       </div>
+      <button
+        onClick={toggleSignup}
+        className="toggle-form"
+        aria-label={signUp ? "Go to login" : "Go to sign up"}
+      >
+        {signUp
+          ? "Already have an account? Log in"
+          : "Don't have an account? Sign up"}
+      </button>
     </div>
   );
 }

@@ -3,10 +3,8 @@ puts "Seed file is running..."
 #Users
 
 henry = User.create!(
-    username: "Henry",
     name: "Henry Escobar",
-    email: "henrye@gmail.com",
-    experience: "Expert",
+    username: "henry",
     password_digest: BCrypt::Password.create("henryhikes")
 )
 

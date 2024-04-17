@@ -1,0 +1,91 @@
+.report {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: fit-content;
+    max-height: 20rem;
+    overflow-y: auto;
+    color: rgb(100, 100, 100);
+    font-family: 'Rubik', sans-serif;
+    background-color: #f5f5f5;
+    cursor: default;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    margin: 0.5rem 0;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.report h2 {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.report h2:hover {
+    color: rgb(50, 50, 50);
+}
+
+.report-date {
+    font-weight: 600;
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.report-road-condition {
+    margin-bottom: 0;
+}
+
+.report-trail-condition {
+    margin-top: 0;
+}
+
+.conditions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+.report-summary {
+    font-size: 1em;
+    margin-bottom: 0;
+}
+
+.report-actions {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+
+}
+
+.report-actions button {
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.report-actions button:hover {
+    background-color: #f0f0f0;
+}
+
+.report-pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.report-pagination-controls button {
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    margin: 0;
+}

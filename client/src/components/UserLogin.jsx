@@ -1,16 +1,17 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import { FavoritesContext } from "../context/FavoritesContext";
+import { ReportsContext } from "../context/ReportsContext";
 
-import "../css/UserLogin.css";
-
-function UserLogin({ toggleSignup }) {
+function UserLogin({ className }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
-
   const { setUser, setIsLoggedIn } = useContext(UserContext);
+  const { setUserFavorites } = useContext(FavoritesContext);
+  const { setUserReports } = useContext(ReportsContext);
 
   function handleLogin(e) {
     e.preventDefault();
@@ -31,6 +32,8 @@ function UserLogin({ toggleSignup }) {
         console.log(data);
         if (data.username) {
           setUser(data);
+          setUserFavorites(data.favorites);
+          setUserReports(data.reports);
           setIsLoggedIn(true);
           navigate("/");
         } else {
@@ -44,8 +47,9 @@ function UserLogin({ toggleSignup }) {
   }
 
   return (
-    <div className="login-form">
-      <form onSubmit={handleLogin}>
+    <div className={`login-page ${className}`}>
+      <form className="credentials-form" onSubmit={handleLogin}>
+        <h2>Start Exploring</h2>
         <input
           type="text"
           placeholder="Username"
@@ -62,9 +66,8 @@ function UserLogin({ toggleSignup }) {
         />
         <input type="submit" value="Login" />
       </form>
-      <button onClick={toggleSignup}>Don't have an account? Sign up</button>
       {errors.length > 0 && (
-        <div className="errors" aria-live="assertive">
+        <div className="errors" aria-live="polite">
           {errors.map((error, index) => (
             <p key={index}>{error}</p>
           ))}

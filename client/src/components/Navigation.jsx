@@ -23,7 +23,7 @@ function Navigation() {
               }
               to="/profile"
             >
-              {user.name}
+              {user.username}
             </NavLink>
           </div>
         ) : (

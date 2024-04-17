@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :favorites, only: [:create, :destroy]
   resources :reports
   resources :users, only: [:create, :show, :destroy]
   resources :trails, only: [:index, :show] do 

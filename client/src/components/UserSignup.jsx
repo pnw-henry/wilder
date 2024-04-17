@@ -1,31 +1,45 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import { FavoritesContext } from "../context/FavoritesContext";
+import { useNavigate } from "react-router-dom";
 
-function UserSignUp({ toggleSignup }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [experience, setExperience] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+function UserSignUp({ className }) {
+  const [formData, setFormData] = useState({
+    name: "",
+    username: "",
+    password: "",
+    passwordConfirmation: "",
+  });
+
   const [errors, setErrors] = useState([]);
-
   const { setUser, setIsLoggedIn } = useContext(UserContext);
+  const { setUserFavorites } = useContext(FavoritesContext);
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   function handleNewUserSubmit(e) {
     e.preventDefault();
-    const userData = {
-      name,
-      experience,
-      username,
-      email,
-      password,
-      password_confirmation: passwordConfirmation,
-    };
+    if (formData.password !== formData.passwordConfirmation) {
+      setErrors(["Passwords do not match"]);
+      return;
+    }
+
     fetch("/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userData),
+      body: JSON.stringify({
+        name: formData.name,
+        username: formData.username,
+        password: formData.password,
+        password_confirmation: formData.passwordConfirmation,
+      }),
       credentials: "include",
     })
       .then((response) => response.json())
@@ -33,6 +47,8 @@ function UserSignUp({ toggleSignup }) {
         if (data.username) {
           setIsLoggedIn(true);
           setUser(data);
+          setUserFavorites(data.favorites);
+          navigate("/");
         } else {
           setErrors(data.errors || ["Registration failed"]);
         }
@@ -44,73 +60,51 @@ function UserSignUp({ toggleSignup }) {
   }
 
   return (
-    <div className="signup-form">
-      <form onSubmit={handleNewUserSubmit}>
+    <div className={`signup-page ${className}`}>
+      <form className="credentials-form" onSubmit={handleNewUserSubmit}>
+        <h2>Join the wild</h2>
         <fieldset>
           <input
             type="text"
+            name="name"
             placeholder="Name"
             autoComplete="off"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={formData.name}
+            onChange={handleChange}
           />
-        </fieldset>
-        <fieldset>
-          <div className="experience-dropdown">
-            <select
-              id="experience"
-              defaultValue={""}
-              onChange={(e) => setExperience(e.target.value)}
-            >
-              <option value="" disabled>
-                Experience
-              </option>
-              <option value="Beginner">Beginner</option>
-              <option value="Intermediate">Intermediate</option>
-              <option value="Expert">Expert</option>
-            </select>
-          </div>
         </fieldset>
         <fieldset>
           <input
             type="text"
+            name="username"
             placeholder="Username"
             autoComplete="off"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={formData.username}
+            onChange={handleChange}
           />
         </fieldset>
-        <fieldset>
-          <input
-            type="text"
-            placeholder="Email"
-            autoComplete="off"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </fieldset>
-
         <fieldset>
           <input
             type="password"
+            name="password"
             placeholder="Password"
             autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formData.password}
+            onChange={handleChange}
           />
         </fieldset>
         <fieldset>
           <input
             type="password"
-            placeholder="Password Confirmation"
+            name="passwordConfirmation"
+            placeholder="Confirm Password"
             autoComplete="current-password"
-            value={passwordConfirmation}
-            onChange={(e) => setPasswordConfirmation(e.target.value)}
+            value={formData.passwordConfirmation}
+            onChange={handleChange}
           />
         </fieldset>
         <input type="submit" value="Sign Up" />
       </form>
-      <button onClick={toggleSignup}>Already have an account? Login</button>
       {errors.length > 0 && (
         <div className="errors" aria-live="assertive">
           <p>There were errors with your submission:</p>

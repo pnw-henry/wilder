@@ -7,6 +7,6 @@ class Report < ApplicationRecord
     validates :trail_condition, presence: true, length: { maximum: 100 }
     validates :snow, inclusion: { in: [true, false] }
     validates :bugs, inclusion: { in: [true, false] }
-    validates :summary, presence: true, length: { maximum: 500 }
+    validates :summary, presence: true
     
 end

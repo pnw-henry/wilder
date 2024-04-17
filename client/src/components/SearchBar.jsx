@@ -5,7 +5,7 @@ function SearchBar({ searchTerm, onSearchChange }) {
     <input
       type="text"
       className="search-bar"
-      placeholder="Search for a trail by name..."
+      placeholder="Find a trail by name..."
       value={searchTerm}
       onChange={onSearchChange}
     />

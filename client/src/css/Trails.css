@@ -4,23 +4,41 @@
     align-items: center;
     margin-top: 8rem;
     padding: 0 1.5rem;
+    width: 100%;
+}
+
+.trail-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.all-trails .trail-list-grid {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 1rem;
+    min-height: 200px;
 }
 
 .search-filters {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     padding: 1rem 0;
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 .all-trails .search-bar {
-    width: 50vw;
+    border: 1px solid #ddd;
+    width: 40vw;
     background-color: rgba(255, 255, 255, 0.85);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 1rem 1.5rem;
+    padding: 1rem 1rem;
     font-size: 1em;
-    margin-bottom: 1rem;
-    position: relative;
 }
 
 .all-trails .search-bar:focus {
@@ -32,57 +50,34 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 1rem;
 }
 
-.intensity-dropdown {
+
+.all-trails .intensity-dropdown {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     cursor: pointer;
     padding: 0.5rem 1rem;
+    padding-right: 2rem;
+    /* Make room for the arrow */
     border-radius: 8px;
-    background-color: #fff;
     border: 1px solid #ddd;
-    appearance: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.all-trails .trail-list-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+.all-trails .intensity-dropdown:hover,
+.all-trails .intensity-dropdown:focus {
+    outline: none;
+    /* Removes default focus outline */
+    border-color: #aaa;
+    /* Darker border on hover/focus */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    /* More pronounced shadow */
+    /* Slightly different background to indicate hover/focus */
 }
 
-.all-trails .trail-card {
-    background-color: #ffffff;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    cursor: default;
-    justify-content: space-between;
-    transition: transform 0.3s ease;
-}
-
-.all-trails .trail-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.all-trails .trail-card h2 {
-    font-size: 1.2em;
-    color: #454545;
-}
-
-.all-trails .trail-card p {
-    font-size: 0.9em;
-    color: #666;
-    margin: 0;
-}
-
-.all-trails .trail-card:hover {
-    transform: translateY(-0.5rem);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-}
 
 .pagination-controls {
     display: flex;

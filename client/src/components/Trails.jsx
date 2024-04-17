@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import IntensityFilter from "./IntensityFilter";
-import TrailList from "./TrailList";
 import SearchBar from "./SearchBar";
+import TrailCard from "./TrailCard";
 import Header from "./Header";
 import { TrailsContext } from "../context/TrailsContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,18 +13,24 @@ import {
 import "../css/Trails.css";
 
 function Trails() {
-  const [selectedIntensity, setSelectedIntensity] = useState("All");
+  const [selectedIntensity, setSelectedIntensity] =
+    useState("All Difficulties");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const intensities = ["All", "Easy", "Moderate", "Hard"];
-  const trailsPerPage = 6;
+  const trailsPerPage = 12;
   const { trails } = useContext(TrailsContext);
+
+  useEffect(() => {
+    document.title = "Wilder | All Trails";
+    window.scrollTo(0, 0);
+  }, []);
 
   const filteredTrails = trails
     .filter(
       (trail) =>
-        selectedIntensity === "All" || trail.intensity === selectedIntensity
+        selectedIntensity === "All Difficulties" ||
+        trail.intensity === selectedIntensity
     )
     .filter((trail) =>
       trail.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -41,7 +47,7 @@ function Trails() {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedIntensity]);
+  }, [selectedIntensity, searchTerm]);
 
   const handleNextPage = () => {
     setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
@@ -74,14 +80,17 @@ function Trails() {
         </div>
         <div className="intensity-filter">
           <IntensityFilter
-            intensities={intensities}
             selectedIntensity={selectedIntensity}
             onFilterChange={handleFilterChange}
           />
         </div>
       </section>
       <section className="trail-list">
-        <TrailList trails={sortedTrails} />
+        <div className="trail-list-grid">
+          {sortedTrails.map((trail) => (
+            <TrailCard key={trail.id} trail={trail} />
+          ))}
+        </div>
         <div className="pagination-controls">
           <FontAwesomeIcon
             icon={faChevronLeft}

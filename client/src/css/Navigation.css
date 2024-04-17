@@ -8,8 +8,7 @@
     z-index: 10
 }
 
-.trail-page .nav-bar,
-.all-trails .nav-bar {
+.nav-bar {
     cursor: default;
     right: 0;
     font-size: 1em;

@@ -1,18 +1,25 @@
 import React from "react";
 
-function IntensityFilter({ intensities, selectedIntensity, onFilterChange }) {
+function IntensityFilter({ selectedIntensity, onFilterChange }) {
+  const intensities = ["All Difficulties", "Easy", "Moderate", "Hard"];
+
   return (
-    <select
-      value={selectedIntensity}
-      onChange={(e) => onFilterChange(e.target.value)}
-      className="intensity-dropdown"
-    >
-      {intensities.map((intensity) => (
-        <option key={intensity} value={intensity}>
-          {intensity}
+    <div className="dropdown-wrapper">
+      <select
+        value={selectedIntensity}
+        onChange={(e) => onFilterChange(e.target.value)}
+        className="intensity-dropdown"
+      >
+        <option value="" disabled>
+          Difficulty Select
         </option>
-      ))}
-    </select>
+        {intensities.map((intensity) => (
+          <option key={intensity} value={intensity}>
+            {intensity}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 }
 export default IntensityFilter;

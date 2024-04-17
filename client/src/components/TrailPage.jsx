@@ -1,26 +1,37 @@
 import React, { useState, useEffect, useContext } from "react";
+import Header from "./Header";
+import FavoritesToggle from "./FavoritesToggle";
+import NewReport from "./NewReport";
+import Reports from "./Reports";
 import { useParams } from "react-router-dom";
 import { TrailsContext } from "../context/TrailsContext";
-import Header from "./Header";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSnowflake, faBug } from "@fortawesome/free-solid-svg-icons";
+import { UserContext } from "../context/UserContext";
 import "../css/TrailPage.css";
 
 function TrailPage() {
   const { trails } = useContext(TrailsContext);
+  const { user } = useContext(UserContext);
   const { trailId } = useParams();
   const [trail, setTrail] = useState(null);
-
-  console.log("trail", trail);
+  const [showReportForm, setShowReportForm] = useState(false);
 
   useEffect(() => {
     const foundTrail = trails.find((trail) => trail.id.toString() === trailId);
     setTrail(foundTrail);
   }, [trails, trailId]);
 
+  useEffect(() => {
+    document.title = `Wilder | ${trail?.name}`;
+    window.scrollTo(0, 0);
+  }, [trail]);
+
   if (!trail) {
     return <div>Loading...</div>;
   }
+
+  const handleToggleReportForm = () => {
+    setShowReportForm(!showReportForm);
+  };
 
   const trailStats = [
     { label: "Length", value: `${trail.length} miles` },
@@ -33,9 +44,11 @@ function TrailPage() {
     <div className="trail-page">
       <Header />
       <section className="trail-details">
-        <div className="trail-name-location">
-          <h1>{trail.name}</h1>
-          <p>{trail.location}</p>
+        <div className="trail-info-favorites-wrapper">
+          <div className="trail-name-location">
+            <h1>{trail.name}</h1>
+            <p>{trail.location}</p>
+          </div>
         </div>
         <div className="trail-stats">
           {trailStats.map((stat, index) => (
@@ -44,35 +57,44 @@ function TrailPage() {
               <p className="stat-label">{stat.label}</p>
             </div>
           ))}
+          <div className="trail-page-favorites">
+            <FavoritesToggle trailId={trail.id} />
+          </div>
         </div>
       </section>
       <section className="trail-summary">
         <img src={trail.image_url} alt={`View of ${trail.name}`} />
-        <p className="trail-text">{trail.summary}</p>
+        <div className="trail-text">
+          <p>{trail.summary}</p>
+        </div>
       </section>
-      <section className="trail-reports">
-        {trail.reports.map((report, index) => (
-          <div key={index} className="report">
-            <p className="report-date">{report.date}</p>
-            <p className="report-road-condition">
-              <strong>Road Condition:</strong> {report.road_condition}
-            </p>
-            <p className="report-trail-condition">
-              <strong>Trail Condition:</strong> {report.trail_condition}
-            </p>
-            <p className="report-summary">{report.summary}</p>
-            <div className="conditions">
-              <FontAwesomeIcon
-                icon={faSnowflake}
-                color={report.snow ? "#00f" : "#333"}
-              />
-              <FontAwesomeIcon
-                icon={faBug}
-                color={report.bugs ? "#0f0" : "#333"}
+      <section className="trailpage-reports-section">
+        <h2>Trail Reports</h2>
+        {trail.reports.length === 0 && <p>No reports yet.</p>}
+        {user ? (
+          <button
+            onClick={handleToggleReportForm}
+            className="new-report-button"
+          >
+            Submit New Report
+          </button>
+        ) : (
+          <p>
+            <a href="/login">Log in</a> to submit a new report.
+          </p>
+        )}
+        {showReportForm && (
+          <div className="modal-backdrop">
+            <div className="modal-content">
+              <NewReport
+                trailId={trailId}
+                trailName={trail.name}
+                closeForm={handleToggleReportForm}
               />
             </div>
           </div>
-        ))}
+        )}
+        <Reports reports={trail.reports} />
       </section>
     </div>
   );

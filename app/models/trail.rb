@@ -1,6 +1,7 @@
 class Trail < ApplicationRecord
     has_many :reports, dependent: :destroy
     has_many :users, through: :reports
+    has_many :favorites, dependent: :destroy
 
     has_one_attached :image
 
