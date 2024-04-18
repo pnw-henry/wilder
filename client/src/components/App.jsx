@@ -10,6 +10,7 @@ import { UserContext } from "../context/UserContext";
 import { TrailsContext } from "../context/TrailsContext";
 import { FavoritesContext } from "../context/FavoritesContext";
 import { ReportsContext } from "../context/ReportsContext";
+import { LoadingContext } from "../context/LoadingContext";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -25,43 +26,45 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    setLoading(true);
-
-    const fetchTrails = fetch("/trails").then((res) => res.json());
-    const fetchReports = fetch("/reports").then((res) => res.json());
-
-    Promise.all([fetchTrails, fetchReports])
-      .then(([fetchedTrails, fetchedReports]) => {
-        setTrails(fetchedTrails);
-        setReports(fetchedReports);
-      })
-      .catch((error) => {
-        setErrors((prevErrors) => [...prevErrors, error.message]);
-      })
-      .finally(() => {
+    const fetchData = async () => {
+      try {
+        const [trailsRes, reportsRes] = await Promise.all([
+          fetch("/trails").then((res) => res.json()),
+          fetch("/reports").then((res) => res.json()),
+        ]);
+        setTrails(trailsRes);
+        setReports(reportsRes);
         setLoading(false);
-      });
+      } catch (error) {
+        setErrors((prev) => [...prev, error.message]);
+      }
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {
-    fetch("/me", { credentials: "include" })
-      .then((response) => response.json())
-      .then((user) => {
-        if (user.username) {
-          console.log(user);
+    const fetchUser = async () => {
+      try {
+        const userData = await fetch("/me", { credentials: "include" }).then(
+          (res) => res.json()
+        );
+        if (userData.username) {
+          setUser(userData);
           setIsLoggedIn(true);
-          setUser(user);
-          setUserFavorites(user.favorites);
-          setUserReports(user.reports);
+          setUserReports(userData.reports);
+          setUserFavorites(userData.favorites);
         } else {
-          setErrors(user.errors);
+          const errors = Array.isArray(userData.errors)
+            ? userData.errors
+            : [userData.errors];
+          setErrors(errors);
         }
-      })
-      .catch((error) => {
-        console.error("Authentication error:", error);
-        setErrors([...errors, error.message]);
-      });
-  }, [setIsLoggedIn, setUser, setErrors, errors]);
+      } catch (error) {
+        setErrors((prev) => [...prev, error.message]);
+      }
+    };
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     setFadeIn(true);
@@ -90,10 +93,13 @@ function App() {
       setUserReports,
       reports,
       setReports,
-      loading,
-      setLoading,
     }),
-    [userReports, loading, reports]
+    [userReports, reports]
+  );
+
+  const loadingContextValue = useMemo(
+    () => ({ loading, setLoading }),
+    [loading]
   );
 
   return (
@@ -101,18 +107,20 @@ function App() {
       <TrailsContext.Provider value={trailsContextValue}>
         <FavoritesContext.Provider value={favoritesContextValue}>
           <ReportsContext.Provider value={reportsContextValue}>
-            <div className="App">
-              <div className={fadeIn ? "fade-in" : ""}>
-                <Routes>
-                  <Route path="/trails" element={<Trails />}></Route>
-                  <Route path="/trail/:trailId" element={<TrailPage />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/profile" element={<UserProfile />} />
-                  <Route path="/" element={<Home />} />
-                </Routes>
-                <Footer />
+            <LoadingContext.Provider value={loadingContextValue}>
+              <div className="App">
+                <div className={fadeIn ? "fade-in" : ""}>
+                  <Routes>
+                    <Route path="/trails" element={<Trails />}></Route>
+                    <Route path="/trail/:trailId" element={<TrailPage />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/profile" element={<UserProfile />} />
+                    <Route path="/" element={<Home errors={errors} />} />
+                  </Routes>
+                  {!loading && <Footer />}
+                </div>
               </div>
-            </div>
+            </LoadingContext.Provider>
           </ReportsContext.Provider>
         </FavoritesContext.Provider>
       </TrailsContext.Provider>

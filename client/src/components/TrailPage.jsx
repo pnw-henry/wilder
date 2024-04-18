@@ -6,27 +6,48 @@ import Reports from "./Reports";
 import { useParams } from "react-router-dom";
 import { TrailsContext } from "../context/TrailsContext";
 import { UserContext } from "../context/UserContext";
+import { LoadingContext } from "../context/LoadingContext";
 import "../css/TrailPage.css";
 
 function TrailPage() {
   const { trails } = useContext(TrailsContext);
   const { user } = useContext(UserContext);
+  const { loading, setLoading } = useContext(LoadingContext);
   const { trailId } = useParams();
   const [trail, setTrail] = useState(null);
   const [showReportForm, setShowReportForm] = useState(false);
 
   useEffect(() => {
-    const foundTrail = trails.find((trail) => trail.id.toString() === trailId);
-    setTrail(foundTrail);
-  }, [trails, trailId]);
+    const foundTrail = trails.find((t) => t.id.toString() === trailId);
+    if (foundTrail) {
+      setLoading(true);
+      const img = new Image();
+      img.src = foundTrail.image_url;
+      img.onload = () => {
+        setTrail(foundTrail);
+        setLoading(false);
+      };
+      img.onerror = () => {
+        console.error("Image loading failed for", foundTrail.name);
+        setTrail(foundTrail);
+        setLoading(false);
+      };
+    }
+  }, [trails, trailId, setLoading]);
 
   useEffect(() => {
     document.title = `Wilder | ${trail?.name}`;
     window.scrollTo(0, 0);
   }, [trail]);
 
-  if (!trail) {
-    return <div>Loading...</div>;
+  if (loading || !trail) {
+    return (
+      <div className="home">
+        <div className="photo-loading">
+          <div className="home-loader"></div>
+        </div>
+      </div>
+    );
   }
 
   const handleToggleReportForm = () => {
@@ -57,9 +78,11 @@ function TrailPage() {
               <p className="stat-label">{stat.label}</p>
             </div>
           ))}
-          <div className="trail-page-favorites">
-            <FavoritesToggle trailId={trail.id} />
-          </div>
+          {user && (
+            <div className="trail-page-favorites">
+              <FavoritesToggle trailId={trail.id} />
+            </div>
+          )}
         </div>
       </section>
       <section className="trail-summary">

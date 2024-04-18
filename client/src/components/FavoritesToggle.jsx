@@ -14,7 +14,7 @@ function FavoritesToggle({ trailId }) {
 
   useEffect(() => {
     setIsFavorite(userFavorites.some((fav) => fav.trail_id === trailId));
-  }, [userFavorites]);
+  }, [userFavorites, trailId]);
 
   const toggleFavorite = () => {
     const method = isFavorite ? "DELETE" : "POST";

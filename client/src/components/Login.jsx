@@ -16,14 +16,18 @@ function Login() {
   const toggleSignup = () => setSignUp((prevSignUp) => !prevSignUp);
 
   return (
-    <div className="login-container">
+    <div className="login-page">
       <Header />
-      <div className={`login-signup ${signUp ? "show-signup" : "show-login"}`}>
-        {signUp ? (
-          <UserSignup key="signup" className="user-signup-enter" />
-        ) : (
-          <UserLogin key="login" className="user-login-enter" />
-        )}
+      <div className="login-container">
+        <div
+          className={`login-signup ${signUp ? "show-signup" : "show-login"}`}
+        >
+          {signUp ? (
+            <UserSignup key="signup" className="user-signup-enter" />
+          ) : (
+            <UserLogin key="login" className="user-login-enter" />
+          )}
+        </div>
       </div>
       <button
         onClick={toggleSignup}

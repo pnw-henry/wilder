@@ -42,7 +42,10 @@ function UserLogin({ className }) {
       })
       .catch((error) => {
         console.error("Login Error:", error);
-        setErrors([...errors, "Network error, please try again"]);
+        setErrors([
+          ...errors,
+          error.message || "Network error, please try again",
+        ]);
       });
   }
 
@@ -66,10 +69,12 @@ function UserLogin({ className }) {
         />
         <input type="submit" value="Login" />
       </form>
-      {errors.length > 0 && (
-        <div className="errors" aria-live="polite">
+      {errors && (
+        <div className="error-messages" aria-live="polite">
           {errors.map((error, index) => (
-            <p key={index}>{error}</p>
+            <p className="error" key={index}>
+              {error}
+            </p>
           ))}
         </div>
       )}

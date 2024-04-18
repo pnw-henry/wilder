@@ -8,9 +8,9 @@ import React, {
 } from "react";
 import { Link } from "react-router-dom";
 import { TrailsContext } from "../context/TrailsContext";
-import { UserContext } from "../context/UserContext";
 import { FavoritesContext } from "../context/FavoritesContext";
 import { ReportsContext } from "../context/ReportsContext";
+import { LoadingContext } from "../context/LoadingContext";
 import SearchBar from "./SearchBar";
 import TrailCard from "./TrailCard";
 import Reports from "./Reports";
@@ -18,7 +18,7 @@ import Header from "./Header";
 
 import "../css/Home.css";
 
-function Home() {
+function Home({ errors }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [shuffledTrails, setShuffledTrails] = useState([]);
   const [displayedTrails, setDisplayedTrails] = useState([]);
@@ -32,9 +32,9 @@ function Home() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const { trails } = useContext(TrailsContext);
-  const { user } = useContext(UserContext);
   const { userFavorites } = useContext(FavoritesContext);
-  const { reports, loading } = useContext(ReportsContext);
+  const { reports } = useContext(ReportsContext);
+  const { loading } = useContext(LoadingContext);
 
   const trailsContainerRef = useRef(null);
   const allContentLoaded = trailsLoaded && favoritesLoaded && imageLoaded;
@@ -46,19 +46,23 @@ function Home() {
 
   useEffect(() => {
     if (trails.length > 0) {
-      const shuffled = [...trails].sort(() => 0.5 - Math.random());
-      setShuffledTrails(shuffled);
-      setTrailsLoaded(true);
+      if (userFavorites === null) {
+        setShuffledTrails(trails.sort(() => 0.5 - Math.random()));
+        setTrailsLoaded(true);
+      } else {
+        const favoriteIds = new Set(userFavorites.map((fav) => fav.trail_id));
+        const nonFavoriteTrails = trails.filter(
+          (trail) => !favoriteIds.has(trail.id)
+        );
+        const shuffled = nonFavoriteTrails.sort(() => 0.5 - Math.random());
+        setShuffledTrails(shuffled);
+        setTrailsLoaded(true);
+      }
     }
-  }, [trails]);
+  }, [trails, userFavorites]);
 
   useEffect(() => {
-    console.log("User favorites:", userFavorites);
-    if (userFavorites.length > 0) {
-      setFavoritesLoaded(true);
-    }
-
-    if (userFavorites.length === 0) {
+    if (userFavorites !== undefined && userFavorites !== null) {
       setFavoritesLoaded(true);
     }
   }, [userFavorites]);
@@ -87,9 +91,9 @@ function Home() {
   const adjustDisplayedTrails = useCallback(() => {
     if (trailsContainerRef.current && allContentLoaded) {
       const containerWidth = trailsContainerRef.current.offsetWidth;
-      const cardWidthWithGap = 240; // Includes the card width plus any gap/margin
+      const cardWidthWithGap = 150;
       const maxItemsPerRow = Math.floor(containerWidth / cardWidthWithGap);
-      const totalMaxItems = maxItemsPerRow * 2; // Assuming 2 rows, adjust if needed
+      const totalMaxItems = maxItemsPerRow * 2;
 
       setDisplayedTrails(shuffledTrails.slice(0, totalMaxItems));
     }
@@ -150,14 +154,12 @@ function Home() {
               searchTerm={searchTerm}
               onSearchChange={handleSearchChange}
             />
-            {searchTerm && (
-              <div
-                className={`search-results ${
-                  searchTerm && filteredTrails.length > 0 ? "expanded" : ""
-                }`}
-              >
-                {filteredTrails.length > 0 ? (
-                  filteredTrails.map((trail) => (
+            {searchTerm &&
+              (filteredTrails.length > 0 ? (
+                <div
+                  className={`search-results ${searchTerm ? "expanded" : ""}`}
+                >
+                  {filteredTrails.map((trail) => (
                     <Link
                       to={`/trail/${trail.id}`}
                       key={trail.id}
@@ -166,14 +168,13 @@ function Home() {
                       <h2>{trail.name}</h2>
                       <p>{trail.location}</p>
                     </Link>
-                  ))
-                ) : (
-                  <div className="no-results">
-                    <p>No trails found matching "{searchTerm}"</p>
-                  </div>
-                )}
-              </div>
-            )}
+                  ))}
+                </div>
+              ) : (
+                <div className="no-results">
+                  <p>No trails found matching "{searchTerm}"</p>
+                </div>
+              ))}
           </div>
         </div>
       </section>
@@ -189,6 +190,15 @@ function Home() {
         <h2 className="home-titles">Latest Trail Reports</h2>
         <Reports reports={latestTrailReports} isHome={true} showName={true} />
       </section>
+      {errors && (
+        <div className="error-messages">
+          {errors.map((error, index) => (
+            <p key={index} className="error-message">
+              {error}
+            </p>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

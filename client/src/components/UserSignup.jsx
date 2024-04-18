@@ -10,7 +10,6 @@ function UserSignUp({ className }) {
     password: "",
     passwordConfirmation: "",
   });
-
   const [errors, setErrors] = useState([]);
   const { setUser, setIsLoggedIn } = useContext(UserContext);
   const { setUserFavorites } = useContext(FavoritesContext);
@@ -26,10 +25,6 @@ function UserSignUp({ className }) {
 
   function handleNewUserSubmit(e) {
     e.preventDefault();
-    if (formData.password !== formData.passwordConfirmation) {
-      setErrors(["Passwords do not match"]);
-      return;
-    }
 
     fetch("/users", {
       method: "POST",
@@ -54,8 +49,10 @@ function UserSignUp({ className }) {
         }
       })
       .catch((error) => {
-        console.error("Signup Error:", error);
-        setErrors([...errors, "Network error, please try again"]);
+        setErrors([
+          ...errors,
+          error.message || "Network error, please try again",
+        ]);
       });
   }
 
@@ -105,14 +102,13 @@ function UserSignUp({ className }) {
         </fieldset>
         <input type="submit" value="Sign Up" />
       </form>
-      {errors.length > 0 && (
-        <div className="errors" aria-live="assertive">
-          <p>There were errors with your submission:</p>
-          <ul>
-            {errors.map((error, index) => (
-              <li key={index}>{error}</li>
-            ))}
-          </ul>
+      {errors && (
+        <div className="error-messages">
+          {errors.map((error, index) => (
+            <p className="error" key={index}>
+              {error}
+            </p>
+          ))}
         </div>
       )}
     </div>

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import TrailCard from "./TrailCard";
 import Reports from "./Reports";
 import { Grid, AutoSizer } from "react-virtualized";
@@ -7,22 +7,23 @@ import { UserContext } from "../context/UserContext";
 import { FavoritesContext } from "../context/FavoritesContext";
 import { ReportsContext } from "../context/ReportsContext";
 import { TrailsContext } from "../context/TrailsContext";
+import { LoadingContext } from "../context/LoadingContext";
 import Header from "./Header";
 
 import "../css/UserProfile.css";
 
 function UserProfile() {
-  const [isLoading, setIsLoading] = useState(true);
   const { user, setUser, setIsLoggedIn, isLoggedIn } = useContext(UserContext);
   const { userFavorites, setUserFavorites } = useContext(FavoritesContext);
   const { userReports, setUserReports } = useContext(ReportsContext);
+  const { setLoading, Loading } = useContext(LoadingContext);
   const { trails } = useContext(TrailsContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = `Wilder | ${user.username}`;
+    document.title = `Wilder | ${user?.username}`;
     window.scrollTo(0, 0);
-  }, []);
+  }, [user]);
 
   const now = new Date();
   const hours = now.getHours();
@@ -37,7 +38,7 @@ function UserProfile() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      setIsLoading(true);
+      setLoading(true);
       try {
         const response = await fetch("/me", { credentials: "include" });
         const userData = await response.json();
@@ -47,16 +48,16 @@ function UserProfile() {
         }
       } catch (error) {
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
 
     if (!user) {
       fetchUser();
     } else {
-      setIsLoading(false);
+      setLoading(false);
     }
-  }, [user, setUser, setIsLoggedIn]);
+  }, [user, setUser, setIsLoggedIn, setLoading]);
 
   const handleLogout = () => {
     fetch("/logout", { method: "DELETE", credentials: "include" })
@@ -83,8 +84,14 @@ function UserProfile() {
     );
   }
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (Loading) {
+    return (
+      <div className="home">
+        <div className="photo-loading">
+          <div className="home-loader"></div>
+        </div>
+      </div>
+    );
   }
 
   return (

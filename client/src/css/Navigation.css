@@ -1,29 +1,52 @@
-/* Navigation.css */
-.home .nav-bar {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    color: #f5f5f5;
+.nav-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5em;
     cursor: default;
     font-size: 1.5em;
-    gap: 1rem;
-    z-index: 10
+    color: #f5f5f5;
+    z-index: 10;
 }
 
-.nav-bar {
-    cursor: default;
-    right: 0;
-    font-size: 1em;
-    color: #f5f5f5;
-    gap: 1rem;
+.home .nav-bar {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.5em;
     text-decoration: none;
     background-color: transparent;
     outline: none;
-    letter-spacing: 0.1rem;
-    font-weight: 600
+    font-family: "Rubik", sans-serif;
+    color: #f5f5f5;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    transition: color 0.3s ease;
 }
 
-.nav-link:hover {
-    color: #ffffff
+.nav-link:hover,
+.home .nav-link:hover {
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .nav-bar {
+        justify-content: center;
+        white-space: nowrap;
+    }
+
+    .tral-page .nav-bar,
+    .all-trails .nav-bar,
+    .user-profile .nav-bar,
+    .login-page .nav-bar {
+        gap: 0.2rem;
+        justify-content: end;
+        align-items: center;
+        padding: 0.5em 0.5em;
+        font-size: 1.2em;
+    }
 }

@@ -7,10 +7,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex: 1 1 200px;
+    flex: 1 1 12rem;
     width: 100%;
-    height: fit-content;
-    max-width: 400px;
+    height: 20rem;
     cursor: default;
 }
 
@@ -23,6 +22,7 @@
 .trail-card h2 {
     font-size: 1.2em;
     color: #454545;
+    margin: 0;
 }
 
 .trail-card p {
@@ -103,26 +103,24 @@
     }
 }
 
-/*.trail-card .favorite-button {
-    position: absolute;
-    background-color: #ffffff;
-    bottom: 6rem;
-    right: 0.5rem;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s ease, color 0.4s ease;
-    color: grey;
-}
+@media (max-width: 768px) {
+    .trail-card {
+        height: 16rem;
+        padding: 0.5rem;
+        justify-content: center;
+    }
 
-.favorite-button.isFavorite {
-    color: rgb(50, 50, 50);
-}
+    .trail-card img {
+        height: 180px;
+        max-height: 200px;
+    }
 
-.favorite-button:active {
-    transform: scale(1.1);
-}
+    .trail-card h2 {
+        font-size: 1em;
+    }
 
-.favorite-button:hover {
-    color: black;
-}*/
+    .trail-card p {
+        font-size: 0.8em;
+        margin-top: 0.5em;
+    }
+}
