@@ -77,10 +77,12 @@ header nav {
     }
 
     .home header h1.title {
-        margin-top: 30%;
+        margin-top: 10%;
         margin-bottom: auto;
         font-size: 4em;
     }
+
+    .header nav {}
 
     .trail-page header h1.title,
     .all-trails header h1.title,

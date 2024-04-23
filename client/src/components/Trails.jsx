@@ -124,9 +124,17 @@ function Trails() {
     setSearchTerm(e.target.value);
   };
 
+  // Sort trails by name
   const sortedTrails = currentTrails.sort((a, b) => {
-    return a.name.localeCompare(b.name);
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+    return 0;
   });
+
   return (
     <div className="all-trails">
       <Header />
