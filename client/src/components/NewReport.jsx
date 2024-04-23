@@ -183,12 +183,14 @@ function NewReport({ trailId, trailName, closeForm, existingReport }) {
           required
         />
       </div>
-      <button type="submit" disabled={!isFormFilled}>
-        {existingReport ? "Update Report" : "Submit Report"}
-      </button>
-      <button type="button" onClick={closeForm}>
-        Cancel
-      </button>
+      <div className="form-buttons">
+        <button type="submit" disabled={!isFormFilled}>
+          {existingReport ? "Update Report" : "Submit Report"}
+        </button>
+        <button type="button" onClick={closeForm}>
+          Cancel
+        </button>
+      </div>
     </form>
   ) : (
     <div>Please log in to submit a report.</div>

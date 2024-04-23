@@ -56,7 +56,7 @@ function TrailPage() {
 
   const trailStats = [
     { label: "Length", value: `${trail.length} miles` },
-    { label: "Elevation Gain", value: `${trail.elevation_gain} feet` },
+    { label: "Elevation", value: `${trail.elevation_gain} feet` },
     { label: "Highest Point", value: `${trail.highest_point} feet` },
     { label: "Intensity", value: trail.intensity },
   ];
@@ -70,19 +70,19 @@ function TrailPage() {
             <h1>{trail.name}</h1>
             <p>{trail.location}</p>
           </div>
-        </div>
-        <div className="trail-stats">
-          {trailStats.map((stat, index) => (
-            <div key={index} className="stat-item">
-              <p className="stat-value">{stat.value}</p>
-              <p className="stat-label">{stat.label}</p>
-            </div>
-          ))}
           {user && (
             <div className="trail-page-favorites">
               <FavoritesToggle trailId={trail.id} />
             </div>
           )}
+        </div>
+        <div className="trail-stats">
+          {trailStats.map((stat, index) => (
+            <div key={index} className="stat-item">
+              <p className="stat-label">{stat.label}</p>
+              <p className="stat-value">{stat.value}</p>
+            </div>
+          ))}
         </div>
       </section>
       <section className="trail-summary">
@@ -107,8 +107,8 @@ function TrailPage() {
           </p>
         )}
         {showReportForm && (
-          <div className="modal-backdrop">
-            <div className="modal-content">
+          <div className={`modal-backdrop ${showReportForm ? "active" : ""}`}>
+            <div className={`modal-content ${showReportForm ? "active" : ""}`}>
               <NewReport
                 trailId={trailId}
                 trailName={trail.name}

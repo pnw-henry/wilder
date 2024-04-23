@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 100%;
     margin-top: 8rem;
     padding: 0 1.5rem;
@@ -21,10 +22,9 @@
 }
 
 .user-details h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #5e5e5e;
     margin: 0;
-    padding: 0 1rem;
 }
 
 .user-details button {
@@ -44,7 +44,36 @@
     background-color: #0056b3;
 }
 
-/* User reports */
+.profile-heading {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.5rem;
+    color: #5e5e5e;
+    margin: 0;
+    padding: 0.5rem;
+
+}
+
+.user-favorites-section {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.favorite-trails-container {
+    width: 100%;
+    height: 22rem;
+    overflow-x: hidden;
+}
+
+.no-favorites {
+    color: #5e5e5e;
+    margin: 0;
+    padding: 0 1rem;
+}
 
 .profile-trail-reports {
     width: 100%;
@@ -63,30 +92,6 @@
     gap: 1rem;
 }
 
-/* Favorite trails */
-.user-favorites-section {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-}
-
-.no-favorites {
-    color: #5e5e5e;
-    margin: 0;
-    padding: 0 1rem;
-}
-
-.profile-heading {
-    display: flex;
-    font-size: 1.5rem;
-    color: #5e5e5e;
-    margin: 0;
-    padding: 0 1rem;
-
-}
-
 .pagination-buttons {
     display: flex;
     justify-content: center;
@@ -101,18 +106,44 @@
     margin: 0;
 }
 
-.favorite-trails-container {
-    width: 100%;
-    height: 22rem;
-    overflow-x: hidden;
-}
 
-.fsvorite-trails-container .trail-card {
-    width: 100%;
-    height: fit-content;
-}
+@media (max-width: 768px) {
+    .user-profile {
+        margin-top: 4rem;
+        padding: 0 0.5rem;
+    }
 
-/* Optional: Styles to remove margin for the last card */
-.trail-card:last-child {
-    margin-right: 0;
+    .user-details {
+        padding: 0.5rem;
+        justify-content: space-evenly;
+        width: 120vw;
+        align-items: center;
+        margin-bottom: 0;
+
+    }
+
+    .user-details h1 {
+        font-size: 1rem;
+    }
+
+    .user-details button {
+        padding: 0.5rem 1rem;
+        font-size: 0.6rem;
+    }
+
+    .profile-heading {
+        font-size: 1rem;
+    }
+
+    .profile-heading:first-of-type {
+        margin-top: 1rem;
+    }
+
+    .favorite-trails-container {
+        height: 16rem;
+    }
+
+    .reports-container {
+        margin-bottom: 1rem;
+    }
 }

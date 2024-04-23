@@ -37,7 +37,7 @@ function Reports({ reports, isHome, showName }) {
           isHome={isHome}
         />
       ))}
-      <div className="report-pagination-controls">
+      <div className="pagination-controls">
         <FontAwesomeIcon
           icon={faChevronLeft}
           className={`arrow ${currentPage === 1 ? "lighten" : "darken"}`}

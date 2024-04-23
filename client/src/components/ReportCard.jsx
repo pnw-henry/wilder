@@ -69,17 +69,21 @@ function ReportCard({ report, showName, isHome }) {
   };
   return (
     <div className={`report ${isUserReport ? "user-report" : ""}`}>
-      <Link to={`/trail/${report.trail_id}`}>
-        {showName && <h2>{trailIdToName[report.trail_id]}</h2>}
-      </Link>
-      <p className="report-date">{formatDate(report.date)}</p>
-      <p className="report-road-condition">
-        Road Condition: {report.road_condition}
-      </p>
-      <p className="report-trail-condition">
-        Trail Condition: {report.trail_condition}
-      </p>
+      <div className="report-header">
+        <Link to={`/trail/${report.trail_id}`}>
+          <h2>{trailIdToName[report.trail_id]}</h2>
+        </Link>
+        <p>{formatDate(report.date)}</p>
+      </div>
       <div className="conditions">
+        <p className="report-road-condition">
+          <strong>The road:</strong> {report.road_condition}
+        </p>
+        <p className="report-trail-condition">
+          <strong>The trail:</strong> {report.trail_condition}
+        </p>
+      </div>
+      <div className="environment">
         <FontAwesomeIcon
           icon={faSnowflake}
           color={report.snow ? "#3c88a8" : "#ccc"}

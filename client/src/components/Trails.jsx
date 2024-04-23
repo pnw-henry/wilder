@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import IntensityFilter from "./IntensityFilter";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import Filter from "./Filter";
 import SearchBar from "./SearchBar";
 import TrailCard from "./TrailCard";
 import Header from "./Header";
@@ -8,15 +8,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 import "../css/Trails.css";
 
 function Trails() {
   const [selectedIntensity, setSelectedIntensity] =
     useState("All Difficulties");
+  const [selectedLength, setSelectedLength] = useState("All Distances");
+  const [selectedElevation, setSelectedElevation] = useState(
+    "All Elevation Gains"
+  );
+  const [showFilters, setShowFilters] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [modalAnimation, setModalAnimation] = useState("");
+  const timeoutRef = useRef(null);
 
   const trailsPerPage = 12;
   const { trails } = useContext(TrailsContext);
@@ -26,15 +35,69 @@ function Trails() {
     window.scrollTo(0, 0);
   }, []);
 
-  const filteredTrails = trails
-    .filter(
-      (trail) =>
-        selectedIntensity === "All Difficulties" ||
-        trail.intensity === selectedIntensity
+  const handleFilterChange = (filterType, value) => {
+    switch (filterType) {
+      case "intensity":
+        setSelectedIntensity(value);
+        break;
+      case "length":
+        setSelectedLength(value);
+        break;
+      case "elevation":
+        setSelectedElevation(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const toggleFilters = () => {
+    if (showFilters) {
+      setModalAnimation("hide");
+      timeoutRef.current = setTimeout(() => {
+        setShowFilters(false);
+        setModalAnimation("");
+      }, 500);
+    } else {
+      setShowFilters(true);
+      setModalAnimation("show");
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  const filteredTrails = trails.filter((trail) => {
+    // Intensity filter
+    if (
+      selectedIntensity !== "All Difficulties" &&
+      trail.intensity !== selectedIntensity
     )
-    .filter((trail) =>
-      trail.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+      return false;
+    // Length filter
+    if (selectedLength === "Less than 4 miles" && trail.length > 4)
+      return false;
+    if (selectedLength === "More than 4 miles" && trail.length <= 4)
+      return false;
+    // Elevation filter
+    if (
+      selectedElevation === "Less than 2000 feet" &&
+      trail.elevation_gain > 2000
+    )
+      return false;
+    if (
+      selectedElevation === "More than 2000 feet" &&
+      trail.elevation_gain <= 2000
+    )
+      return false;
+    // Search term filter
+    return trail.name.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   const totalPages = Math.ceil(filteredTrails.length / trailsPerPage);
 
@@ -57,10 +120,6 @@ function Trails() {
     setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
   };
 
-  const handleFilterChange = (intensity) => {
-    setSelectedIntensity(intensity);
-  };
-
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -71,22 +130,43 @@ function Trails() {
   return (
     <div className="all-trails">
       <Header />
-      <section className="search-filters">
-        <div className="all-trails-search">
-          <SearchBar
-            searchTerm={searchTerm}
-            onSearchChange={handleSearchChange}
-          />
+      <section className="search-section">
+        <div className="search-bar-icon">
+          <div className="all-trails-search">
+            <SearchBar
+              searchTerm={searchTerm}
+              onSearchChange={handleSearchChange}
+            />
+          </div>
+          <div className="filters-wrapper">
+            <div className="search-filters-icon" onClick={toggleFilters}>
+              <FontAwesomeIcon icon={faBars} />
+            </div>
+          </div>
         </div>
-        <div className="intensity-filter">
-          <IntensityFilter
-            selectedIntensity={selectedIntensity}
-            onFilterChange={handleFilterChange}
-          />
-        </div>
+        {showFilters && (
+          <div className={`filter-modal ${modalAnimation}`}>
+            <div className="filter-modal-content">
+              <div className="filter-modal-header">
+                <button
+                  onClick={toggleFilters}
+                  className="filter-modal-close-btn"
+                >
+                  <FontAwesomeIcon icon={faTimes} />{" "}
+                </button>
+              </div>
+              <Filter
+                selectedIntensity={selectedIntensity}
+                selectedLength={selectedLength}
+                selectedElevation={selectedElevation}
+                onFilterChange={handleFilterChange}
+              />
+            </div>
+          </div>
+        )}
       </section>
       <section className="trail-list">
-        <div className="trail-list-grid">
+        <div className="all-trails-section">
           {sortedTrails.map((trail) => (
             <TrailCard key={trail.id} trail={trail} />
           ))}

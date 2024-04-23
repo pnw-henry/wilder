@@ -31,7 +31,7 @@ function UserSignUp({ className }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: formData.name,
-        username: formData.username,
+        username: formData.username.toLowerCase(),
         password: formData.password,
         password_confirmation: formData.passwordConfirmation,
       }),

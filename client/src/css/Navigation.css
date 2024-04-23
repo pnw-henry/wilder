@@ -35,8 +35,11 @@
 
 @media (max-width: 768px) {
     .nav-bar {
-        justify-content: center;
+        justify-content: flex-end;
         white-space: nowrap;
+        font-size: 1.2em;
+        gap: 0.5rem;
+        padding-right: 0;
     }
 
     .tral-page .nav-bar,

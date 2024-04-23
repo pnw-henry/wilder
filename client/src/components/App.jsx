@@ -117,8 +117,8 @@ function App() {
                     <Route path="/profile" element={<UserProfile />} />
                     <Route path="/" element={<Home errors={errors} />} />
                   </Routes>
-                  {!loading && <Footer />}
                 </div>
+                {!loading && <Footer />}
               </div>
             </LoadingContext.Provider>
           </ReportsContext.Provider>

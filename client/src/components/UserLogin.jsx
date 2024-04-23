@@ -50,14 +50,14 @@ function UserLogin({ className }) {
   }
 
   return (
-    <div className={`login-page ${className}`}>
+    <div className={`login-form ${className}`}>
       <form className="credentials-form" onSubmit={handleLogin}>
         <h2>Start Exploring</h2>
         <input
           type="text"
           placeholder="Username"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value.toLowerCase())}
           autoComplete="off"
         />
         <input

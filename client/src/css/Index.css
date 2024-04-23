@@ -12,7 +12,7 @@ body {
         box-sizing: border-box;
     }
 
-    font-family: "Playfair Display",
+    font-family: 'Rubik',
     sans-serif;
 }
 
@@ -27,6 +27,12 @@ body {
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 img {
@@ -47,6 +53,26 @@ img {
 
     100% {
         opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        right: -100%;
+    }
+
+    to {
+        right: 0;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        right: 0;
+    }
+
+    to {
+        right: -100%;
     }
 }
 
@@ -89,14 +115,7 @@ img {
 
 .error-messages {
     color: red;
-    padding: 2rem;
     box-sizing: border-box
-}
-
-.error {
-    margin: 0;
-    text-align: center;
-
 }
 
 input[type="text"],
@@ -131,12 +150,6 @@ textarea {
     font-family: "Cabin", sans-serif;
 }
 
-@media screen and (max-width: 768px) {
-    .error {
-        font-size: 1.5em
-    }
-}
-
 a {
     text-decoration: none;
     background-color: transparent;
@@ -161,7 +174,6 @@ button {
     border: 1px solid #ddd;
     border-radius: 0.3rem;
     box-shadow: 0 0.12rem 0.25rem rgba(0, 0, 0, 0.1);
-    margin-left: 0.62rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 

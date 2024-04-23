@@ -35,20 +35,6 @@ header.loaded {
 
 }
 
-.logo {
-    fill: none;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    stroke-miterlimit: 1.5;
-    stroke: #f5f5f5;
-    stroke-width: 8;
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
-    width: 1.5em;
-    height: 1.5em;
-    margin: 0;
-    cursor: pointer;
-}
-
 .home header h1.title {
     display: flex;
     align-items: center;
@@ -57,6 +43,10 @@ header.loaded {
     cursor: pointer;
     margin: 0;
     font: 400 4em/1 "Josefin Sans", sans-serif;
+}
+
+.home .title-part {
+    font-size: 1.3em;
 }
 
 .trail-page header h1.title,
@@ -69,13 +59,6 @@ header.loaded {
     cursor: pointer;
     margin: 0;
     font: 400 3em/1 "Josefin Sans", sans-serif
-}
-
-.trail-page .logo,
-.all-trails .logo,
-.user-profile .logo,
-.login-page .logo {
-    filter: unset;
 }
 
 header nav {

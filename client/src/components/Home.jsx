@@ -16,6 +16,8 @@ import TrailCard from "./TrailCard";
 import Reports from "./Reports";
 import Header from "./Header";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import "../css/Home.css";
 
 function Home({ errors }) {
@@ -35,6 +37,8 @@ function Home({ errors }) {
   const { userFavorites } = useContext(FavoritesContext);
   const { reports } = useContext(ReportsContext);
   const { loading } = useContext(LoadingContext);
+
+  console.log("trails", trails);
 
   const trailsContainerRef = useRef(null);
   const allContentLoaded = trailsLoaded && favoritesLoaded && imageLoaded;
@@ -159,6 +163,11 @@ function Home({ errors }) {
                 <div
                   className={`search-results ${searchTerm ? "expanded" : ""}`}
                 >
+                  {filteredTrails.length > 3 && (
+                    <div className="scroll-indicator">
+                      <FontAwesomeIcon icon={faChevronDown} />
+                    </div>
+                  )}
                   {filteredTrails.map((trail) => (
                     <Link
                       to={`/trail/${trail.id}`}
@@ -179,7 +188,7 @@ function Home({ errors }) {
         </div>
       </section>
       <section className="home-trails-section">
-        <h2 className="home-titles">Find Something New</h2>
+        <div className="home-titles">Featured Trails</div>
         <div className="home-trails-container" ref={trailsContainerRef}>
           {displayedTrails.map((trail) => (
             <TrailCard key={trail.id} trail={trail} />

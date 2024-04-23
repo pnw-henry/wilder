@@ -77,8 +77,13 @@ function UserProfile() {
     const { trail_id } = userFavorites[columnIndex];
     const trail = trails.find((trail) => trail.id === trail_id);
 
+    const adjustedStyle = {
+      ...style,
+      padding: 5,
+    };
+
     return (
-      <div key={key} style={style}>
+      <div key={key} style={adjustedStyle}>
         {trail && <TrailCard key={trail.id} trail={trail} isProfile={true} />}
       </div>
     );
@@ -108,18 +113,23 @@ function UserProfile() {
             {userFavorites.length > 0 ? (
               <div className="favorite-trails-container">
                 <AutoSizer>
-                  {({ width, height }) => (
-                    <Grid
-                      cellRenderer={cellRenderer}
-                      columnCount={userFavorites.length}
-                      columnWidth={425} // Adjust based on your TrailCard width
-                      height={height}
-                      rowCount={1}
-                      rowHeight={350} // Adjust based on your TrailCard height, ensuring it fits within the .favorite-trails-container's height
-                      width={width}
-                      style={{ overflowX: "auto" }}
-                    />
-                  )}
+                  {({ width, height }) => {
+                    const isSmallScreen = width < 768;
+                    const cardWidth = isSmallScreen ? width / 2 - 5 : 470 - 5;
+                    const cardHeight = isSmallScreen ? 250 : 350;
+                    return (
+                      <Grid
+                        cellRenderer={cellRenderer}
+                        columnCount={userFavorites.length}
+                        columnWidth={cardWidth}
+                        height={height}
+                        rowCount={1}
+                        rowHeight={cardHeight}
+                        width={width}
+                        style={{ overflowX: "auto" }}
+                      />
+                    );
+                  }}
                 </AutoSizer>
               </div>
             ) : (

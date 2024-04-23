@@ -7,8 +7,6 @@ function TrailCard({ trail, isProfile }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { id, name, location, image_url } = trail;
 
-  console.log("isProfile:", isProfile);
-
   useEffect(() => {
     const img = new Image();
     img.src = trail.image_url;
@@ -18,26 +16,26 @@ function TrailCard({ trail, isProfile }) {
 
   return (
     <div className="trail-card">
-      {!imageLoaded && (
-        <div className="image-placeholder">
-          <div className="loader"></div>
-        </div>
-      )}
-      <img
-        src={image_url}
-        alt={name}
-        className="trail-image"
-        style={{ display: imageLoaded ? "block" : "none" }}
-      />
+      <div className="image-container">
+        {!imageLoaded ? (
+          <div className="image-placeholder">
+            <div className="loader"></div>
+          </div>
+        ) : (
+          <img src={image_url} alt={name} className="trail-image" />
+        )}
+      </div>
       {isProfile && (
         <div className="trail-card-overlay">
           <FavoritesToggle trailId={id} />
         </div>
       )}
-      <Link to={`/trail/${id}`}>
-        <h2>{name}</h2>
-      </Link>
-      <p>{location}</p>
+      <div className="trail-card-info">
+        <Link to={`/trail/${id}`}>
+          <h2>{name}</h2>
+        </Link>
+        <p>{location}</p>
+      </div>
     </div>
   );
 }

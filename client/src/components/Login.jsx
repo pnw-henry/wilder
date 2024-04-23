@@ -28,16 +28,16 @@ function Login() {
             <UserLogin key="login" className="user-login-enter" />
           )}
         </div>
+        <button
+          onClick={toggleSignup}
+          className="toggle-form"
+          aria-label={signUp ? "Go to login" : "Go to sign up"}
+        >
+          {signUp
+            ? "Already have an account? Log in"
+            : "Don't have an account? Sign up"}
+        </button>
       </div>
-      <button
-        onClick={toggleSignup}
-        className="toggle-form"
-        aria-label={signUp ? "Go to login" : "Go to sign up"}
-      >
-        {signUp
-          ? "Already have an account? Log in"
-          : "Don't have an account? Sign up"}
-      </button>
     </div>
   );
 }
