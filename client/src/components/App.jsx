@@ -45,6 +45,10 @@ function App() {
     fetchData();
   }, []);
 
+  console.log("user", user);
+  console.log("trail", trails);
+  console.log("reports", reports);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
