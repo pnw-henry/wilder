@@ -32,7 +32,10 @@ function App() {
           fetch("/trails").then((res) => res.json()),
           fetch("/reports").then((res) => res.json()),
         ]);
+
+        trailsRes.sort((a, b) => a.name.localeCompare(b.name));
         setTrails(trailsRes);
+
         setReports(reportsRes);
         setLoading(false);
       } catch (error) {

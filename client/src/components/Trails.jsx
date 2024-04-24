@@ -124,17 +124,6 @@ function Trails() {
     setSearchTerm(e.target.value);
   };
 
-  // Sort trails by name
-  const sortedTrails = currentTrails.sort((a, b) => {
-    if (a.name < b.name) {
-      return -1;
-    }
-    if (a.name > b.name) {
-      return 1;
-    }
-    return 0;
-  });
-
   return (
     <div className="all-trails">
       <Header />
@@ -175,7 +164,7 @@ function Trails() {
       </section>
       <section className="trail-list">
         <div className="all-trails-section">
-          {sortedTrails.map((trail) => (
+          {currentTrails.map((trail) => (
             <TrailCard key={trail.id} trail={trail} />
           ))}
         </div>

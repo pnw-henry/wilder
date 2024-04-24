@@ -4,6 +4,7 @@ import FavoritesToggle from "./FavoritesToggle";
 import NewReport from "./NewReport";
 import Reports from "./Reports";
 import { useParams } from "react-router-dom";
+import ReactHtmlParser from "html-react-parser";
 import { TrailsContext } from "../context/TrailsContext";
 import { UserContext } from "../context/UserContext";
 import { LoadingContext } from "../context/LoadingContext";
@@ -59,6 +60,8 @@ function TrailPage() {
     { label: "Elevation", value: `${trail.elevation_gain} feet` },
     { label: "Highest Point", value: `${trail.highest_point} feet` },
     { label: "Intensity", value: trail.intensity },
+    { label: "Dogs Allowed", value: trail.dogs ? "Yes" : "No" },
+    { label: "Pass Type", value: trail.pass },
   ];
 
   return (
@@ -88,7 +91,7 @@ function TrailPage() {
       <section className="trail-summary">
         <img src={trail.image_url} alt={`View of ${trail.name}`} />
         <div className="trail-text">
-          <p>{trail.summary}</p>
+          <p>{ReactHtmlParser(trail.summary)}</p>
         </div>
       </section>
       <section className="trailpage-reports-section">

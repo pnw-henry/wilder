@@ -4,10 +4,10 @@ import { NavLink } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 import "../css/Navigation.css";
-function Navigation() {
+function Navigation({ showHeader }) {
   const { user, isLoggedIn } = useContext(UserContext);
   return (
-    <nav className="nav-bar">
+    <nav className={`nav-bar ${showHeader ? "loaded" : ""}`}>
       <NavLink
         to="/trails"
         className={(isActive) => "nav-link" + (!isActive ? " unselected" : "")}
