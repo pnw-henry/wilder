@@ -11,6 +11,6 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
-  get '*path', to: 'frontend#index'
-  root to: 'frontend#index'
+  get '*path', to: 'fallback#index'
+  root to: 'fallback#index'
 end
