@@ -1,6 +1,6 @@
 databases:
-  - name: wilder
-    databaseName: wilder
+  - name: wild_loops
+    databaseName: wild_loops
     user: henryescobar
 
 services:

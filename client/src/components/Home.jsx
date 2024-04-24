@@ -38,8 +38,6 @@ function Home({ errors }) {
   const { reports } = useContext(ReportsContext);
   const { loading } = useContext(LoadingContext);
 
-  console.log("trails", trails);
-
   const trailsContainerRef = useRef(null);
   const allContentLoaded = trailsLoaded && favoritesLoaded && imageLoaded;
 
@@ -82,12 +80,11 @@ function Home({ errors }) {
           setImageLoaded(true);
         };
         img.onerror = () => {
-          console.error("Image loading failed");
           setImageLoaded(false);
         };
       })
       .catch((error) => {
-        console.error("Fetching home image failed:", error);
+        console.error("Failed to load home image:", error);
         setImageLoaded(false);
       });
   }, []);
