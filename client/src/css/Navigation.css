@@ -65,11 +65,11 @@
     .all-trails .nav-bar,
     .user-profile .nav-bar,
     .login-page .nav-bar {
-        gap: 0.2rem;
-        margin-top: 0;
+        gap: 0;
+        margin-top: 0.4rem;
         justify-content: end;
         align-items: center;
-        padding: 0.5em 0.5em;
-        font-size: 1.2em;
+        padding: 0.5em;
+        font-size: 1em;
     }
 }

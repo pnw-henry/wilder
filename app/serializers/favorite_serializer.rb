@@ -1,3 +1,3 @@
 class FavoriteSerializer < ActiveModel::Serializer
-  attributes :trail_id
+  attributes :id ,:trail_id, :user_id
 end
