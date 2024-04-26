@@ -218,6 +218,11 @@
 
 @media (max-width: 768px) {
 
+    .search-container {
+        margin-top: -5rem;
+
+    }
+
     .home-titles {
         padding: 1rem;
         font-size: 1rem;
