@@ -28,9 +28,7 @@ function App() {
     const fetchData = async () => {
       try {
         const [trailsRes, reportsRes] = await Promise.all([
-          fetch("/trails", { headers: { Accept: "application/json" } }).then(
-            (res) => res.json()
-          ),
+          fetch("/trails").then((res) => res.json()),
           fetch("/reports").then((res) => res.json()),
         ]);
 

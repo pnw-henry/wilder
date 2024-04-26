@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :favorites, only: [:create, :destroy]
   resources :reports
   resources :users, only: [:create, :show, :destroy]
-  resources :trails, only: [:index, :show], defaults: { format: :json }
+  resources :trails, only: [:index, :show]
 
   get "/me", to: "users#show"
   get "/home_image", to: "trails#home_image"

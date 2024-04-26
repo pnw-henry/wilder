@@ -6,6 +6,7 @@ $trail_objects = $s3_client.list_objects_v2(bucket: $bucket_name, prefix: "trail
 $image_keys = $trail_objects.map { |obj| [File.basename(obj.key, ".*"), obj.key] }.to_h
 
 class TrailsController < ApplicationController
+  include ActionController::MimeResponds
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
 
@@ -19,7 +20,10 @@ class TrailsController < ApplicationController
       trail.as_json(include: [:reports]).merge(image_url: image_url)
     end
 
-    render json: trails_with_images
+    respond_to do |format|
+      format.json { render json: trails_with_images }
+      format.html { redirect_to root_path } 
+    end
   end
 
   def show
