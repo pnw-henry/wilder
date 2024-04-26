@@ -19,11 +19,6 @@ class TrailsController < ApplicationController
       image_url = image_key ? $presigner.presigned_url(:get_object, bucket: $bucket_name, key: image_key, expires_in: 3600) : nil
       trail.as_json(include: [:reports]).merge(image_url: image_url)
     end
-
-    respond_to do |format|
-      format.json { render json: trails_with_images }
-      format.html { redirect_to root_path } 
-    end
   end
 
   def show
