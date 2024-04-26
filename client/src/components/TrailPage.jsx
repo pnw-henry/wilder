@@ -96,7 +96,7 @@ function TrailPage() {
             <p>
               {trail.pass === "None"
                 ? "You don't need a pass for parking"
-                : `You need a ${trail.pass} for parking`}
+                : `You need a ${trail.pass} pass for parking`}
             </p>
           </div>
         </div>

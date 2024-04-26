@@ -24,12 +24,13 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   const location = useLocation();
-  console.log(user);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [trailsRes, reportsRes] = await Promise.all([
-          fetch("/trails").then((res) => res.json()),
+          fetch("/trails", { headers: { Accept: "application/json" } }).then(
+            (res) => res.json()
+          ),
           fetch("/reports").then((res) => res.json()),
         ]);
 
