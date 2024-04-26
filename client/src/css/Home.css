@@ -54,7 +54,7 @@
 
 .home input[type="text"] {
     width: 100%;
-    background-color: rgba(230, 230, 230, 0.9);
+    background-color: rgba(230, 230, 230, 0.78);
     border: solid 1px hsl(0, 0%, 100%);
     border-radius: 1.5rem;
     padding: 1.2rem 1.5rem;
@@ -219,7 +219,7 @@
 @media (max-width: 768px) {
 
     .search-container {
-        margin-top: -5rem;
+        margin-top: -10rem;
 
     }
 
