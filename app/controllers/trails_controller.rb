@@ -20,7 +20,11 @@ class TrailsController < ApplicationController
       trail.as_json(include: [:reports]).merge(image_url: image_url)
     end
 
-    render json: trails_with_images
+    if request.format.json?
+      render json: trails_with_images
+    else
+      render file: Rails.root.join('public', 'index.html'), layout: false
+    end
   end
 
   def show
