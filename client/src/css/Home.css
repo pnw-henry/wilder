@@ -232,6 +232,10 @@
         font-size: 0.8em;
     }
 
+    .home-background {
+        height: 90vh;
+    }
+
     .home-trails-section,
     .home-reports-section {
         max-width: 100%;
