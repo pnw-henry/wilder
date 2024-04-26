@@ -94,6 +94,7 @@ function ReportCard({ report, showName, isHome }) {
         />
       </div>
       <p className="report-summary">{report.summary}</p>
+      {report.user ? <p>Written by {report.user.username}</p> : null}
 
       {isUserReport && !isHome && (
         <div className="report-actions">

@@ -26,9 +26,12 @@ function Trails() {
   const [currentPage, setCurrentPage] = useState(1);
   const [modalAnimation, setModalAnimation] = useState("");
   const timeoutRef = useRef(null);
+  const windowRef = useRef(null);
 
   const trailsPerPage = 12;
   const { trails } = useContext(TrailsContext);
+
+  console.log("Trails Component mounted");
 
   useEffect(() => {
     document.title = "Wilder | All Trails";
@@ -114,10 +117,12 @@ function Trails() {
 
   const handleNextPage = () => {
     setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
+    windowRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handlePrevPage = () => {
     setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
+    windowRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleSearchChange = (e) => {
@@ -163,7 +168,7 @@ function Trails() {
         )}
       </section>
       <section className="trail-list">
-        <div className="all-trails-section">
+        <div className="all-trails-section" ref={windowRef}>
           {currentTrails.map((trail) => (
             <TrailCard key={trail.id} trail={trail} />
           ))}

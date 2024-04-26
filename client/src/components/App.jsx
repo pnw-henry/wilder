@@ -24,7 +24,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   const location = useLocation();
-
+  console.log(user);
   useEffect(() => {
     const fetchData = async () => {
       try {

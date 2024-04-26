@@ -60,24 +60,15 @@ function TrailPage() {
     { label: "Elevation", value: `${trail.elevation_gain} feet` },
     { label: "Highest Point", value: `${trail.highest_point} feet` },
     { label: "Intensity", value: trail.intensity },
-    { label: "Dogs Allowed", value: trail.dogs ? "Yes" : "No" },
-    { label: "Pass Type", value: trail.pass },
   ];
 
   return (
     <div className="trail-page">
       <Header />
-      <section className="trail-details">
-        <div className="trail-info-favorites-wrapper">
-          <div className="trail-name-location">
-            <h1>{trail.name}</h1>
-            <p>{trail.location}</p>
-          </div>
-          {user && (
-            <div className="trail-page-favorites">
-              <FavoritesToggle trailId={trail.id} />
-            </div>
-          )}
+      <div className="trail-information">
+        <div className="trail-heading">
+          <h1>{trail.name}</h1>
+          <p>{trail.location}</p>
         </div>
         <div className="trail-stats">
           {trailStats.map((stat, index) => (
@@ -87,13 +78,29 @@ function TrailPage() {
             </div>
           ))}
         </div>
-      </section>
-      <section className="trail-summary">
-        <img src={trail.image_url} alt={`View of ${trail.name}`} />
-        <div className="trail-text">
-          <p>{ReactHtmlParser(trail.summary)}</p>
+      </div>
+      <div className="page-divider"> </div>
+      <div className="trail-content">
+        <div className="trail-visuals">
+          <img src={trail.image_url} alt={`View of ${trail.name}`} />
+          {user && (
+            <div className="favorite-toggle">
+              <FavoritesToggle trailId={trail.id} />
+            </div>
+          )}
         </div>
-      </section>
+        <div className="trail-summary">
+          <p>{ReactHtmlParser(trail.summary)}</p>
+          <div className="dogs-pass">
+            <p>{trail.dogs ? "Dogs are allowed" : "Dogs are not allowed"}</p>
+            <p>
+              {trail.pass === "None"
+                ? "You don't need a pass for parking"
+                : `You need a ${trail.pass} for parking`}
+            </p>
+          </div>
+        </div>
+      </div>
       <section className="trailpage-reports-section">
         <h2>Trail Reports</h2>
         {trail.reports.length === 0 && <p>No reports yet.</p>}
