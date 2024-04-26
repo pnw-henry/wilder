@@ -31,8 +31,6 @@ function Trails() {
   const trailsPerPage = 12;
   const { trails } = useContext(TrailsContext);
 
-  console.log("Trails Component mounted");
-
   useEffect(() => {
     document.title = "Wilder | All Trails";
     window.scrollTo(0, 0);
