@@ -22,7 +22,12 @@ class TrailsController < ApplicationController
     if request.format.json?
       render json: trails_with_images
     else
-      redirect_to '/index.html'  # Redirect to static file served by Nginx/Apache
+      file_path = Rails.root.join('public', 'index.html')
+        if File.exist?(file_path)
+          send_file(file_path, type: 'text/html', disposition: 'inline')
+        else
+          raise ActionController::RoutingError, 'Not Found'
+        end
     end
   end
 
