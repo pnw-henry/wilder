@@ -12,7 +12,6 @@ class TrailsController < ApplicationController
 
 
   def index
-    if request.format.json?
       trails = Trail.all
       trails_with_images = trails.map do |trail|
         image_key = $image_keys[trail.name]
@@ -20,10 +19,10 @@ class TrailsController < ApplicationController
         trail.as_json(include: [:reports]).merge(image_url: image_url)
       end
 
+    if request.format.json?
       render json: trails_with_images
     else
-      # Delegate to FallbackController
-      FallbackController.action(:index).call(env)
+      redirect_to '/index.html'  # Redirect to static file served by Nginx/Apache
     end
   end
 
