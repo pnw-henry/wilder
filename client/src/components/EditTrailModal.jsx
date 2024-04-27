@@ -43,10 +43,6 @@ function EditTrailModal({ trail, closeForm }) {
   return (
     <div className="modal-backdrop" onClick={closeForm}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="close-button" onClick={closeForm}>
-          &times;
-        </button>
-        <h2>Edit Trail</h2>
         <form className="form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Name</label>
