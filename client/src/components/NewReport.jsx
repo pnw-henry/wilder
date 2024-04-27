@@ -117,7 +117,7 @@ function NewReport({
   };
 
   return user ? (
-    <form className="new-report-form" onSubmit={handleSubmit}>
+    <form className="form" onSubmit={handleSubmit}>
       <h2>{`Trail Report for ${trailName}`}</h2>
       <div className="form-group">
         <label htmlFor="date">Date</label>

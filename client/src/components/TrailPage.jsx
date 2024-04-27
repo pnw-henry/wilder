@@ -3,6 +3,7 @@ import Header from "./Header";
 import FavoritesToggle from "./FavoritesToggle";
 import NewReport from "./NewReport";
 import Reports from "./Reports";
+import EditTrailModal from "./EditTrailModal";
 import { useParams } from "react-router-dom";
 import ReactHtmlParser from "html-react-parser";
 import { TrailsContext } from "../context/TrailsContext";
@@ -17,6 +18,7 @@ function TrailPage() {
   const { trailId } = useParams();
   const [trail, setTrail] = useState(null);
   const [showReportForm, setShowReportForm] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     const foundTrail = trails.find((t) => t.id.toString() === trailId);
@@ -62,6 +64,10 @@ function TrailPage() {
     { label: "Intensity", value: trail.intensity },
   ];
 
+  const handleEditClick = () => {
+    setShowEditModal(true);
+  };
+
   return (
     <div className="trail-page">
       <Header />
@@ -69,6 +75,17 @@ function TrailPage() {
         <div className="trail-heading">
           <h1>{trail.name}</h1>
           <p>{trail.location}</p>
+          {user && user.id === 1 && (
+            <button className="edit-trail-button" onClick={handleEditClick}>
+              Edit Trail
+            </button>
+          )}
+          {showEditModal && (
+            <EditTrailModal
+              trail={trail}
+              closeForm={() => setShowEditModal(false)}
+            />
+          )}
         </div>
         <div className="trail-stats">
           {trailStats.map((stat, index) => (
@@ -119,8 +136,14 @@ function TrailPage() {
           </p>
         )}
         {showReportForm && (
-          <div className={`modal-backdrop ${showReportForm ? "active" : ""}`}>
-            <div className={`modal-content ${showReportForm ? "active" : ""}`}>
+          <div
+            className={`modal-backdrop ${showReportForm ? "active" : ""}`}
+            onClick={handleToggleReportForm}
+          >
+            <div
+              className={`modal-content ${showReportForm ? "active" : ""}`}
+              onClick={(e) => e.stopPropagation()}
+            >
               <NewReport
                 trailId={trailId}
                 trailName={trail.name}

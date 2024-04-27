@@ -39,6 +39,17 @@ class TrailsController < ApplicationController
     render json: trail
   end
 
+   def update
+    trail = find_trail
+    user = find_user
+    if (user.id != 1)
+      return render json: {error: "You are not authorized to edit this trail"}, status: :unauthorized
+    else
+      trail.update!(trail_params)
+      render json: trail, status: :ok
+    end
+  end
+
   def home_image
   # List all objects in the "home" folder
     home_objects = $s3_client.list_objects_v2(bucket: $bucket_name, prefix: "home/").contents
@@ -62,6 +73,14 @@ class TrailsController < ApplicationController
 
   def find_trail
     Trail.find(params[:id])
+  end
+
+  def trail_params
+    params.permit(:name, :location, :length, :elevation_gain, :highest_point, :difficulty, :dogs, :pass, :summary, :image_url)
+  end
+
+  def find_user
+    User.find(session[:user_id])
   end
 
   def render_unprocessable_entity_response(exception)

@@ -9,7 +9,7 @@
 .trail-information {
     display: flex;
     align-items: flex-start;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     width: 100%;
     margin-bottom: 1.5rem;
@@ -32,6 +32,17 @@
     font-size: 1.25rem;
     color: #5e5e5e;
     margin: 0;
+}
+
+.edit-trail-button {
+    padding: 0.5rem 1rem;
+    margin: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-size: 1rem;
 }
 
 .trail-stats {
@@ -136,6 +147,11 @@ img {
     font-size: 1.5rem;
     color: #5e5e5e;
     margin: 0;
+}
+
+.trailpage-reports-section p {
+    font-size: 1rem;
+    margin: 0.2rem 0;
 }
 
 .new-report-button {

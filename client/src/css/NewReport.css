@@ -19,7 +19,7 @@
     border-radius: 10px;
 }
 
-.new-report-form {
+.form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -32,7 +32,7 @@
 
 }
 
-.new-report-form h2 {
+.form h2 {
     color: #505050;
     margin: 0;
     text-align: center;
@@ -40,12 +40,12 @@
     margin-bottom: 1rem;
 }
 
-.new-report-form .form-group {
+.form .form-group {
     margin-bottom: 1.25rem;
     width: 100%;
 }
 
-.new-report-form .form-group label {
+.form .form-group label {
     display: block;
     color: #606060;
     font-weight: 600;
@@ -53,14 +53,14 @@
     margin: 0;
 }
 
-.new-report-form .form-group input {
+.form .form-group input {
     color: #606060;
 
 }
 
-.new-report-form .form-group input[type="text"],
-.new-report-form .form-group input[type="date"],
-.new-report-form .form-group textarea {
+.form .form-group input[type="text"],
+.form .form-group input[type="date"],
+.form .form-group textarea {
     width: 100%;
     padding: 0.5rem 0.75rem;
 
@@ -71,29 +71,29 @@
     font-size: 1rem;
 }
 
-.new-report-form .form-group textarea {
+.form .form-group textarea {
     resize: vertical;
 }
 
-.new-report-form .checkbox-group {
+.form .checkbox-group {
     display: flex;
     align-items: center;
     padding: 0.5rem 0;
 
 }
 
-.new-report-form .checkbox-group input[type="checkbox"] {
+.form .checkbox-group input[type="checkbox"] {
     margin-right: 0.5rem;
 
 }
 
-.new-report-form .checkbox-group .icon {
+.form .checkbox-group .icon {
     margin-right: 0.2rem;
 
 }
 
-.new-report-form button[type="submit"],
-.new-report-form button[type="button"] {
+.form button[type="submit"],
+.form button[type="button"] {
     color: rgb(245, 245, 245);
     width: 100%;
     text-align: center;
@@ -107,21 +107,21 @@
 
 }
 
-.new-report-form button[type="button"] {
+.form button[type="button"] {
     background-color: #6c757d;
     margin-left: 0.5rem;
     width: 100%;
 }
 
-.new-report-form button[type="submit"] {
+.form button[type="submit"] {
     background-color: #007bff;
 }
 
-.new-report-form button[type="submit"]:hover {
+.form button[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-.new-report-form button[type="submit"]:disabled {
+.form button[type="submit"]:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
@@ -133,7 +133,7 @@
     width: 100%;
 }
 
-.new-report-form .error {
+.form .error {
     color: red;
     margin-top: 0.3125rem;
 }
