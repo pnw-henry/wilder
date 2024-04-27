@@ -37,23 +37,25 @@ function Reports({ reports, isHome, showName }) {
           isHome={isHome}
         />
       ))}
-      <div className="pagination-controls">
-        <FontAwesomeIcon
-          icon={faChevronLeft}
-          className={`arrow ${currentPage === 1 ? "lighten" : "darken"}`}
-          onClick={handlePrevPage}
-        />
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <FontAwesomeIcon
-          icon={faChevronRight}
-          className={`arrow ${
-            currentPage === totalPages ? "lighten" : "darken"
-          }`}
-          onClick={handleNextPage}
-        />
-      </div>
+      {reports.length > 0 && (
+        <div className="pagination-controls">
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            className={`arrow ${currentPage === 1 ? "lighten" : "darken"}`}
+            onClick={handlePrevPage}
+          />
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <FontAwesomeIcon
+            icon={faChevronRight}
+            className={`arrow ${
+              currentPage === totalPages ? "lighten" : "darken"
+            }`}
+            onClick={handleNextPage}
+          />
+        </div>
+      )}
     </div>
   );
 }

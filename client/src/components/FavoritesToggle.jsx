@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { FavoritesContext } from "../context/FavoritesContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark as fullBookmark } from "@fortawesome/free-solid-svg-icons";
-import { faBookmark as emptyBookmark } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as fullHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
 
 function FavoritesToggle({ trailId }) {
   const { user } = useContext(UserContext);
@@ -53,7 +53,7 @@ function FavoritesToggle({ trailId }) {
       onClick={toggleFavorite}
       className={`favorite-button ${isFavorite ? "isFavorite" : ""}`}
     >
-      <FontAwesomeIcon icon={isFavorite ? fullBookmark : emptyBookmark} />
+      <FontAwesomeIcon icon={isFavorite ? fullHeart : emptyHeart} />
     </button>
   );
 }
