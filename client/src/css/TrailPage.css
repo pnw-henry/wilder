@@ -95,13 +95,15 @@ img {
 .favorite-toggle button {
     background-color: transparent;
     border: none;
-    color: #ffffffec;
     padding: 0.5rem;
     cursor: pointer;
     font-size: 4rem;
     box-shadow: none;
-    transition: transform 0.2s ease;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+    stroke-width: 2px;
+    background-color: #f5f5f5b0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #5e5e5ede;
+    border-radius: 1rem;
 }
 
 .favorite-toggle button:hover,
