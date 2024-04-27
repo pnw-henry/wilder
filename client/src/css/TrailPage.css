@@ -97,17 +97,12 @@ img {
     border: none;
     padding: 0.5rem;
     cursor: pointer;
-    font-size: 3.5rem;
+    font-size: 3rem;
     box-shadow: none;
     background-color: #f5f5f56a;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: #5e5e5ede;
     border-radius: 0.5rem;
-}
-
-.favorite-toggle button:hover,
-.favorite-toggle button:focus {
-    transform: scale(1.1);
 }
 
 .trail-summary {
@@ -199,7 +194,7 @@ img {
 
     .stat-item {
         align-items: center;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
     }
 
     .trail-content {
@@ -208,7 +203,7 @@ img {
     }
 
     .favorite-toggle button {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .trail-visuals,
