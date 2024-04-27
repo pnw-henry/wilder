@@ -7,7 +7,13 @@ import { faSnowflake, faMosquito } from "@fortawesome/free-solid-svg-icons";
 
 import "../css/NewReport.css";
 
-function NewReport({ trailId, trailName, closeForm, existingReport }) {
+function NewReport({
+  trailId,
+  trailName,
+  closeForm,
+  existingReport,
+  windowRef,
+}) {
   const { user } = useContext(UserContext);
   const { setUserReports, setReports } = useContext(ReportsContext);
   const { setTrails } = useContext(TrailsContext);
@@ -101,14 +107,12 @@ function NewReport({ trailId, trailName, closeForm, existingReport }) {
               : [...prevReports, newOrUpdatedReport]
           );
 
-          console.log("Report processed", newOrUpdatedReport);
           closeForm();
+          windowRef.current.scrollIntoView({ behavior: "smooth" });
         })
         .catch((error) => {
           console.error("Report Error:", error);
         });
-    } else {
-      console.log("Please log in to submit a report.");
     }
   };
 

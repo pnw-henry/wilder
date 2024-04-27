@@ -9,7 +9,7 @@
 .trail-information {
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
     width: 100%;
     margin-bottom: 1.5rem;
@@ -37,25 +37,23 @@
 .trail-stats {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    word-wrap: break-word;
 }
 
 .stat-item {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     min-width: 9.3rem;
 }
 
 .stat-label {
-    font-size: 0.8rem;
-    color: #5e5e5e;
+    font-size: 1.2rem;
     font-weight: 600;
 }
 
 .stat-value {
     margin: 0;
+    font-size: 1rem;
 }
 
 .trail-content {
@@ -97,11 +95,11 @@ img {
     border: none;
     padding: 0.5rem;
     cursor: pointer;
-    font-size: 3rem;
+    font-size: 2rem;
     box-shadow: none;
-    background-color: #f5f5f56a;
+    background-color: #f5f5f56c;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color: #5e5e5ede;
+    color: #444444de;
     border-radius: 0.5rem;
 }
 
@@ -117,7 +115,7 @@ img {
 .dogs-pass {
     display: flex;
     gap: 2rem;
-    margin-bottom: 0.5rem;
+    color: #5e5e5e;
 
 }
 
@@ -134,7 +132,7 @@ img {
     padding: 1rem, 0;
 }
 
-.trailpage-reports-section h2 {
+.trailpage-reports-section h1 {
     font-size: 1.5rem;
     color: #5e5e5e;
     margin: 0;
@@ -164,8 +162,7 @@ img {
 @media (max-width: 48rem) {
 
     .trail-page {
-        margin-top: 4rem;
-        background-color: #f5f5f5;
+        margin-top: 2rem;
     }
 
     .trail-heading {
@@ -175,7 +172,7 @@ img {
     }
 
     .trail-heading h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 
     .trail-heading p {
@@ -194,7 +191,14 @@ img {
 
     .stat-item {
         align-items: center;
-        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+    }
+
+    .stat-value {
+        font-size: 0.7rem;
     }
 
     .trail-content {
@@ -203,7 +207,7 @@ img {
     }
 
     .favorite-toggle button {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 
     .trail-visuals,

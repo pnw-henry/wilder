@@ -102,8 +102,10 @@ function TrailPage() {
         </div>
       </div>
       <section className="trailpage-reports-section">
-        <h2>Trail Reports</h2>
-        {trail.reports.length === 0 && <p>No reports yet.</p>}
+        <h1>Trail Reports</h1>
+        {trail.reports.length === 0 && (
+          <p>{`No trail reports for ${trail.name} yet.`}</p>
+        )}
         {user ? (
           <button
             onClick={handleToggleReportForm}

@@ -133,15 +133,18 @@ function UserProfile() {
                 </AutoSizer>
               </div>
             ) : (
-              <p className="no-favorites">
+              <p className="no-entries">
                 You haven't favorited any trails yet.{" "}
-                <Link to="/trails">Find a trail</Link>
+                <Link to="/trails">Go find a trail!</Link>
               </p>
             )}
           </section>
           <section className="profile-trail-reports">
             <h2 className="profile-heading">Trail Reports</h2>
             <Reports reports={userReports} showName={true} />
+            {userReports.length === 0 && (
+              <p className="no-entries">You haven't submitted any reports.</p>
+            )}
           </section>
         </>
       ) : (

@@ -35,6 +35,7 @@ function Reports({ reports, isHome, showName }) {
           report={report}
           showName={showName}
           isHome={isHome}
+          windowRef={windowRef}
         />
       ))}
       {reports.length > 0 && (

@@ -51,7 +51,7 @@
     font-size: 1.5rem;
     color: #5e5e5e;
     margin: 0;
-    padding: 0.5rem;
+    padding: 0;
 
 }
 
@@ -69,10 +69,11 @@
     overflow-x: hidden;
 }
 
-.no-favorites {
+.no-entries {
     color: #5e5e5e;
     margin: 0;
-    padding: 0 1rem;
+    margin-top: 1rem;
+    padding: 0;
 }
 
 .profile-trail-reports {
