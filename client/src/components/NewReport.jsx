@@ -27,6 +27,8 @@ function NewReport({
     summary: existingReport?.summary || "",
   });
 
+  const today = new Date().toISOString().slice(0, 10);
+
   useEffect(() => {
     if (existingReport) {
       setReportData(existingReport);
@@ -35,6 +37,18 @@ function NewReport({
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    if (name === "date") {
+      const selectedDate = new Date(value);
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
+
+      if (selectedDate > currentDate) {
+        alert("Date cannot be in the future. Are you a time traveler?");
+        return;
+      }
+    }
+
     setReportData((prevData) => ({
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
@@ -127,6 +141,7 @@ function NewReport({
           id="date"
           value={reportData.date}
           onChange={handleChange}
+          max={today}
           required
         />
       </div>
