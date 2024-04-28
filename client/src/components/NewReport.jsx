@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import Toast from "./Toast";
 import { UserContext } from "../context/UserContext";
 import { TrailsContext } from "../context/TrailsContext";
 import { ReportsContext } from "../context/ReportsContext";
@@ -17,6 +18,7 @@ function NewReport({
   const { user } = useContext(UserContext);
   const { setUserReports, setReports } = useContext(ReportsContext);
   const { setTrails } = useContext(TrailsContext);
+  const [toastMessage, setToastMessage] = useState("");
 
   const [reportData, setReportData] = useState({
     date: existingReport?.date || "",
@@ -44,7 +46,7 @@ function NewReport({
       currentDate.setHours(0, 0, 0, 0);
 
       if (selectedDate > currentDate) {
-        alert("Date cannot be in the future. Are you a time traveler?");
+        setToastMessage("Future dates are not allowed.");
         return;
       }
     }
@@ -130,8 +132,15 @@ function NewReport({
     }
   };
 
+  const handleCloseToast = () => {
+    setToastMessage("");
+  };
+
   return user ? (
     <form className="form" onSubmit={handleSubmit}>
+      {toastMessage && (
+        <Toast message={toastMessage} onClose={handleCloseToast} />
+      )}
       <h2>{`Trail Report for ${trailName}`}</h2>
       <div className="form-group">
         <label htmlFor="date">Date</label>
