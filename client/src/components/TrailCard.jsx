@@ -22,12 +22,14 @@ function TrailCard({ trail, isProfile }) {
             <div className="loader"></div>
           </div>
         ) : (
-          <img
-            src={image_url}
-            onContextMenu={(e) => e.preventDefault()}
-            alt={name}
-            className="trail-image"
-          />
+          <Link className="trail-image" to={`/trail/${id}`}>
+            <img
+              src={image_url}
+              onContextMenu={(e) => e.preventDefault()}
+              alt={name}
+              className="trail-image"
+            />
+          </Link>
         )}
       </div>
       {isProfile && (
