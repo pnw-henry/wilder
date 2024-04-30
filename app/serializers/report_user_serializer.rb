@@ -1,3 +1,3 @@
 class ReportUserSerializer < ActiveModel::Serializer
-  attributes :username
+  attributes :id, :username
 end

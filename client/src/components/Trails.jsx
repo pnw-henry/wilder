@@ -167,27 +167,35 @@ function Trails() {
       </section>
       <section className="trail-list">
         <div className="all-trails-section" ref={windowRef}>
-          {currentTrails.map((trail) => (
-            <TrailCard key={trail.id} trail={trail} />
-          ))}
+          {currentTrails.length > 0 ? (
+            currentTrails.map((trail) => (
+              <TrailCard key={trail.id} trail={trail} />
+            ))
+          ) : (
+            <div className="no-trails">
+              <p>No trails found match your search or filters.</p>
+            </div>
+          )}
         </div>
-        <div className="pagination-controls">
-          <FontAwesomeIcon
-            icon={faChevronLeft}
-            className={`arrow ${currentPage === 1 ? "lighten" : "darken"}`}
-            onClick={handlePrevPage}
-          />
-          <span>
-            Page {currentPage} of {totalPages}
-          </span>
-          <FontAwesomeIcon
-            icon={faChevronRight}
-            className={`arrow ${
-              currentPage === totalPages ? "lighten" : "darken"
-            }`}
-            onClick={handleNextPage}
-          />
-        </div>
+        {filteredTrails.length > 0 && (
+          <div className="pagination-controls">
+            <FontAwesomeIcon
+              icon={faChevronLeft}
+              className={`arrow ${currentPage === 1 ? "lighten" : "darken"}`}
+              onClick={handlePrevPage}
+            />
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <FontAwesomeIcon
+              icon={faChevronRight}
+              className={`arrow ${
+                currentPage === totalPages ? "lighten" : "darken"
+              }`}
+              onClick={handleNextPage}
+            />
+          </div>
+        )}
       </section>
     </div>
   );

@@ -46,7 +46,7 @@ function NewReport({
       currentDate.setHours(0, 0, 0, 0);
 
       if (selectedDate > currentDate) {
-        setToastMessage("Future dates are not allowed.");
+        setToastMessage("The future hasn't been written yet");
         return;
       }
     }
@@ -159,7 +159,7 @@ function NewReport({
         <input
           type="text"
           name="road_condition"
-          placeholder="Road Condition"
+          placeholder="Potholes, blockades, passable?"
           value={reportData.road_condition}
           onChange={handleChange}
           required
@@ -170,7 +170,7 @@ function NewReport({
         <input
           type="text"
           name="trail_condition"
-          placeholder="Trail Condition"
+          placeholder="Any obstacles?"
           value={reportData.trail_condition}
           onChange={handleChange}
           required
@@ -205,7 +205,7 @@ function NewReport({
         <textarea
           name="summary"
           id="summary"
-          placeholder="Summary"
+          placeholder="Share your experience, the sights, anything you'd like to note."
           value={reportData.summary}
           onChange={handleChange}
           required

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import NewReport from "./NewReport";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSnowflake, faMosquito } from "@fortawesome/free-solid-svg-icons";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -10,13 +10,35 @@ import { TrailsContext } from "../context/TrailsContext";
 
 import "../css/ReportCard.css";
 
-function ReportCard({ report, showName, isHome }) {
+function ReportCard({ report, isHome }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useContext(UserContext);
   const { userReports, setUserReports, reports, setReports } =
     useContext(ReportsContext);
   const { trails, setTrails } = useContext(TrailsContext);
   const isUserReport = user && user.id === report.user_id;
+
+  const location = useLocation();
+  const isProfile = location.pathname.includes("profile");
+  const isHomePage = location.pathname === "/";
+  const isTrailPage = location.pathname.includes("trail");
+
+  //Find username based on location
+  const findUsername = (report) => {
+    if (isProfile) {
+      return "";
+    } else if (isHomePage) {
+      return report.user.username;
+    } else if (isTrailPage) {
+      // Find the full report from reports context using user_id
+      const fullReport = reports.find((r) => r.id === report.id && r.user);
+      return fullReport && fullReport.user
+        ? fullReport.user.username
+        : "Unknown user";
+    }
+  };
+
+  const username = findUsername(report);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -94,7 +116,9 @@ function ReportCard({ report, showName, isHome }) {
         />
       </div>
       <p className="report-summary">{report.summary}</p>
-      {report.user ? <p>Written by {report.user.username}</p> : null}
+      <div className="report-footer">
+        {username && <p>Submitted by {username}</p>}
+      </div>
 
       {isUserReport && !isHome && (
         <div className="report-actions">

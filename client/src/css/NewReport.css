@@ -79,7 +79,7 @@
     border-radius: 0.25rem;
 
     box-sizing: border-box;
-    font-size: 0.7rem;
+    font-size: 1rem;
 }
 
 .form .form-group textarea {
@@ -158,31 +158,31 @@
         max-height: min-content;
     }
 
-    .new-report-form {
+    .form {
         padding: 0.5rem;
     }
 
-    .new-report-form h2 {
+    .form h2 {
         font-size: 1em;
     }
 
-    .new-report-form .form-group label {
-        font-size: 0.8em;
-    }
-
-    .new-report-form .form-group input[type="text"],
-    .new-report-form .form-group input[type="date"],
-    .new-report-form .form-group textarea {
+    .form .form-group label {
         font-size: 1em;
     }
 
-    .new-report-form button[type="submit"],
-    .new-report-form button[type="button"] {
+    .form .form-group input[type="text"],
+    .form .form-group input[type="date"],
+    .form .form-group textarea {
+        font-size: 1em;
+    }
+
+    .form button[type="submit"],
+    .form button[type="button"] {
         font-size: 0.7em;
         padding: 0.5rem 0.75rem;
     }
 
-    .new-report-form .error {
+    .form .error {
         font-size: 1.2em;
     }
 }
