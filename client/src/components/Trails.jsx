@@ -173,7 +173,7 @@ function Trails() {
             ))
           ) : (
             <div className="no-trails">
-              <p>No trails found match your search or filters.</p>
+              <p>No trails match your search or filters.</p>
             </div>
           )}
         </div>
