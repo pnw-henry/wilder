@@ -41,9 +41,10 @@ function NewReport({
     const { name, value, type, checked } = e.target;
 
     if (name === "date") {
-      const selectedDate = new Date(value);
-      const currentDate = new Date();
-      currentDate.setHours(0, 0, 0, 0);
+      const selectedDate = new Date(value + "T00:00:00Z");
+      const currentDate = new Date(
+        new Date().toISOString().slice(0, 10) + "T00:00:00Z"
+      );
 
       if (selectedDate > currentDate) {
         setToastMessage("The future hasn't been written yet");

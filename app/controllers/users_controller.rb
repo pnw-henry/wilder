@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     end
 
     def show
-        user = User.find(params[:id])
+        user = user = User.find_by(id: session[:user_id])
         render json: user, include: [:favorites, :reports]
     end
 
