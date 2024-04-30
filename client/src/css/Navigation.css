@@ -14,6 +14,18 @@
     z-index: 10;
 }
 
+.nav-bar .welcome {
+    max-width: 500px;
+}
+
+.nav-bar .welcome a.nav-link {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .home .nav-bar {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     transition: opacity 0.5s ease, transform 0.5s ease;
@@ -52,6 +64,10 @@
         font-size: 1.2em;
         gap: 0.5rem;
         padding-right: 0;
+    }
+
+    .nav-bar .welcome {
+        max-width: 125px;
     }
 
     .home .nav-bar {

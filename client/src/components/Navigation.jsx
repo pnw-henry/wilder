@@ -22,8 +22,9 @@ function Navigation({ showHeader }) {
                 "nav-link" + (!isActive ? " unselected" : "")
               }
               to="/profile"
+              title={user.name}
             >
-              {user.name.slice(0, 10) + "..."}
+              {user.name}
             </NavLink>
           </div>
         ) : (
