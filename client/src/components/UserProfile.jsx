@@ -105,7 +105,7 @@ function UserProfile() {
       {isLoggedIn ? (
         <>
           <div className="user-details">
-            <h1>{`${greeting}, ${user.username}!`}</h1>
+            <h1>{`${greeting}, ${user.name.slice(0, 15) + "..."}!`}</h1>
             <button onClick={handleLogout}>Logout</button>
           </div>
           <section className="user-favorites-section">

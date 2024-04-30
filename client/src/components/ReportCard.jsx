@@ -7,6 +7,8 @@ import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { UserContext } from "../context/UserContext";
 import { ReportsContext } from "../context/ReportsContext";
 import { TrailsContext } from "../context/TrailsContext";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 
 import "../css/ReportCard.css";
 
@@ -22,6 +24,8 @@ function ReportCard({ report, isHome }) {
   const isProfile = location.pathname.includes("profile");
   const isHomePage = location.pathname === "/";
   const isTrailPage = location.pathname.includes("trail");
+
+  dayjs.extend(utc);
 
   //Find username based on location
   const findUsername = (report) => {
@@ -41,12 +45,8 @@ function ReportCard({ report, isHome }) {
   const username = findUsername(report);
 
   function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    const date = dayjs(dateString).utc();
+    return date.format("MMMM D, YYYY");
   }
 
   const trailIdToName = trails.reduce((acc, trail) => {
@@ -106,14 +106,8 @@ function ReportCard({ report, isHome }) {
         </p>
       </div>
       <div className="environment">
-        <FontAwesomeIcon
-          icon={faSnowflake}
-          color={report.snow ? "#3c88a8" : "#ccc"}
-        />
-        <FontAwesomeIcon
-          icon={faMosquito}
-          color={report.bugs ? "#60a83c" : "#ccc"}
-        />
+        {report.snow && <FontAwesomeIcon icon={faSnowflake} color="#3c88a8" />}
+        {report.bugs && <FontAwesomeIcon icon={faMosquito} color="#60a83c" />}
       </div>
       <p className="report-summary">{report.summary}</p>
       <div className="report-footer">

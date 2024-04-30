@@ -96,10 +96,13 @@ function TrailPage() {
           ))}
         </div>
       </div>
-      <div className="page-divider"> </div>
       <div className="trail-content">
         <div className="trail-visuals">
-          <img src={trail.image_url} alt={`View of ${trail.name}`} />
+          <img
+            src={trail.image_url}
+            onContextMenu={(e) => e.preventDefault()}
+            alt={trail.name}
+          />
           {user && (
             <div className="favorite-toggle">
               <FavoritesToggle trailId={trail.id} />

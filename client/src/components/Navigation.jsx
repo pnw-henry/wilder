@@ -23,7 +23,7 @@ function Navigation({ showHeader }) {
               }
               to="/profile"
             >
-              Profile
+              {user.name.slice(0, 10) + "..."}
             </NavLink>
           </div>
         ) : (

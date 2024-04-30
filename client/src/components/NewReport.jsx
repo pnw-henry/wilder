@@ -5,6 +5,8 @@ import { TrailsContext } from "../context/TrailsContext";
 import { ReportsContext } from "../context/ReportsContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSnowflake, faMosquito } from "@fortawesome/free-solid-svg-icons";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 
 import "../css/NewReport.css";
 
@@ -30,6 +32,7 @@ function NewReport({
   });
 
   const today = new Date().toISOString().slice(0, 10);
+  dayjs.extend(utc);
 
   useEffect(() => {
     if (existingReport) {
@@ -41,15 +44,18 @@ function NewReport({
     const { name, value, type, checked } = e.target;
 
     if (name === "date") {
-      const selectedDate = new Date(value + "T00:00:00Z");
-      const currentDate = new Date(
-        new Date().toISOString().slice(0, 10) + "T00:00:00Z"
-      );
+      const selectedDate = dayjs(value).utc().format("YYYY-MM-DD");
+      const currentDate = dayjs().utc();
 
-      if (selectedDate > currentDate) {
+      if (dayjs(selectedDate).isAfter(currentDate)) {
         setToastMessage("The future hasn't been written yet");
         return;
       }
+
+      setReportData((prevData) => ({
+        ...prevData,
+        [name]: selectedDate,
+      }));
     }
 
     setReportData((prevData) => ({
@@ -67,6 +73,8 @@ function NewReport({
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const formattedDate = dayjs(reportData.date).utc().format("YYYY-MM-DD");
+
     const endpoint = existingReport
       ? `/reports/${existingReport.id}`
       : "/reports";
@@ -78,6 +86,7 @@ function NewReport({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...reportData,
+          date: formattedDate,
           user_id: user.id,
           trail_id: trailId,
         }),

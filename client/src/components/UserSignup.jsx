@@ -64,7 +64,7 @@ function UserSignUp({ className }) {
           <input
             type="text"
             name="name"
-            placeholder="Name"
+            placeholder="First Name"
             autoComplete="off"
             value={formData.name}
             onChange={handleChange}
