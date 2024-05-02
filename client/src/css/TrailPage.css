@@ -135,7 +135,17 @@ img {
     font-weight: 600;
 }
 
-.directions-button {
+.external-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.directions-button,
+.weather-button {
     background-color: #4CAF50;
     width: fit-content;
     margin: 1rem 0;
@@ -145,6 +155,10 @@ img {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.weather-button {
+    background-color: #3d6a9a;
 }
 
 .trailpage-reports-section {
@@ -238,9 +252,14 @@ img {
         font-size: 1.5rem;
     }
 
-    .directions-button {
+    .directions-button,
+    .weather-button {
         padding: 0.5rem 1rem;
         font-size: 0.6em;
+    }
+
+    #weather-link {
+        display: inline-block;
     }
 
     .trail-visuals,

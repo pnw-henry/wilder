@@ -80,7 +80,7 @@ function TrailPage() {
               Edit Trail
             </button>
           )}
-          <div>
+          <div className="external-links">
             <button
               onClick={() =>
                 window.open(
@@ -91,6 +91,17 @@ function TrailPage() {
               className="directions-button"
             >
               Get Directions
+            </button>
+            <button
+              onClick={() =>
+                window.open(
+                  `https://forecast.weather.gov/MapClick.php?lat=${trail.latitude}&lon=${trail.longitude}`,
+                  "_blank"
+                )
+              }
+              className="weather-button"
+            >
+              Weather Forecast
             </button>
           </div>
           {showEditModal && (
