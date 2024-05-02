@@ -21,27 +21,42 @@ function TrailPage() {
   const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
-    const foundTrail = trails.find((t) => t.id.toString() === trailId);
-    if (foundTrail) {
-      setLoading(true);
-      const img = new Image();
-      img.src = foundTrail.image_url;
-      img.onload = () => {
-        setTrail(foundTrail);
-        setLoading(false);
-      };
-      img.onerror = () => {
-        console.error("Image loading failed for", foundTrail.name);
-        setTrail(foundTrail);
-        setLoading(false);
-      };
-    }
-  }, [trails, trailId, setLoading]);
-
-  useEffect(() => {
     document.title = `Wilder | ${trail?.name}`;
     window.scrollTo(0, 0);
   }, [trail]);
+
+  useEffect(() => {
+    setLoading(true);
+    const foundTrail = trails.find((t) => t.id.toString() === trailId);
+
+    if (foundTrail) {
+      setTrail(foundTrail);
+      setLoading(false);
+    } else {
+      setTrail(null);
+      setLoading(false);
+    }
+  }, [trails, trailId, setLoading]);
+
+  const trailStats = trail
+    ? [
+        { label: "Length", value: `${trail.length || "N/A"} miles` },
+        { label: "Elevation", value: `${trail.elevation_gain || "N/A"} feet` },
+        {
+          label: "Highest Point",
+          value: `${trail.highest_point || "N/A"} feet`,
+        },
+        { label: "Intensity", value: trail.intensity || "N/A" },
+      ]
+    : [];
+
+  const handleEditClick = () => {
+    setShowEditModal(true);
+  };
+
+  const handleToggleReportForm = () => {
+    setShowReportForm(!showReportForm);
+  };
 
   if (loading || !trail) {
     return (
@@ -52,21 +67,6 @@ function TrailPage() {
       </div>
     );
   }
-
-  const handleToggleReportForm = () => {
-    setShowReportForm(!showReportForm);
-  };
-
-  const trailStats = [
-    { label: "Length", value: `${trail.length} miles` },
-    { label: "Elevation", value: `${trail.elevation_gain} feet` },
-    { label: "Highest Point", value: `${trail.highest_point} feet` },
-    { label: "Intensity", value: trail.intensity },
-  ];
-
-  const handleEditClick = () => {
-    setShowEditModal(true);
-  };
 
   return (
     <div className="trail-page">
@@ -80,6 +80,19 @@ function TrailPage() {
               Edit Trail
             </button>
           )}
+          <div>
+            <button
+              onClick={() =>
+                window.open(
+                  `https://www.google.com/maps/dir/?api=1&destination=${trail?.latitude},${trail?.longitude}`,
+                  "_blank"
+                )
+              }
+              className="directions-button"
+            >
+              Get Directions
+            </button>
+          </div>
           {showEditModal && (
             <EditTrailModal
               trail={trail}

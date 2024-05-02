@@ -135,6 +135,18 @@ img {
     font-weight: 600;
 }
 
+.directions-button {
+    background-color: #4CAF50;
+    width: fit-content;
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    font-size: 1em;
+    color: #f5f5f5;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 .trailpage-reports-section {
     width: 100%;
     display: flex;
@@ -224,6 +236,12 @@ img {
 
     .favorite-toggle button {
         font-size: 1.5rem;
+    }
+
+    .directions-button {
+        margin: 1rem 0;
+        padding: 0.5rem 1rem;
+        font-size: 0.5em;
     }
 
     .trail-visuals,

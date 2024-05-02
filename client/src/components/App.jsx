@@ -25,10 +25,6 @@ function App() {
 
   const location = useLocation();
 
-  console.log("trails", trails);
-  console.log("reports", reports);
-  console.log("user", user);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
