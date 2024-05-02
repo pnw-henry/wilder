@@ -7,6 +7,7 @@ function UserSignUp({ className }) {
   const [formData, setFormData] = useState({
     name: "",
     username: "",
+    email: "",
     password: "",
     passwordConfirmation: "",
   });
@@ -32,6 +33,7 @@ function UserSignUp({ className }) {
       body: JSON.stringify({
         name: formData.name,
         username: formData.username.toLowerCase(),
+        email: formData.email,
         password: formData.password,
         password_confirmation: formData.passwordConfirmation,
       }),
@@ -77,6 +79,16 @@ function UserSignUp({ className }) {
             placeholder="Username"
             autoComplete="off"
             value={formData.username}
+            onChange={handleChange}
+          />
+        </fieldset>
+        <fieldset>
+          <input
+            type="text"
+            name="email"
+            placeholder="Email"
+            autoComplete="email"
+            value={formData.email}
             onChange={handleChange}
           />
         </fieldset>
