@@ -84,15 +84,15 @@ function TrailPage() {
             <button
               onClick={() =>
                 window.open(
-                  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                    trail.name
-                  )}+@${trail.latitude},${trail.longitude}`,
+                  `https://www.google.com/maps/?q=${encodeURIComponent(
+                    `${trail.name} @ ${trail.latitude},${trail.longitude}`
+                  )}`,
                   "_blank"
                 )
               }
               className="directions-button"
             >
-              Get Directions
+              Directions
             </button>
             <button
               onClick={() =>
