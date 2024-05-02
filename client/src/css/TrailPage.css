@@ -9,7 +9,7 @@
 .trail-information {
     display: flex;
     align-items: flex-start;
-    justify-content: space-evenly;
+    justify-content: space-around;
     flex-wrap: wrap;
     width: 100%;
     margin-bottom: 1.5rem;
@@ -158,7 +158,7 @@ img {
 }
 
 .weather-button {
-    background-color: #3d6a9a;
+    background-color: #3d7e9a;
 }
 
 .trailpage-reports-section {
@@ -258,10 +258,6 @@ img {
         font-size: 0.6em;
     }
 
-    #weather-link {
-        display: inline-block;
-    }
-
     .trail-visuals,
     .trail-summary {
         width: 100%;
@@ -278,6 +274,10 @@ img {
     }
 
     .dogs-pass p {
+        font-size: 0.9rem;
+    }
+
+    .trailpage-reports-section p {
         font-size: 0.9rem;
     }
 
