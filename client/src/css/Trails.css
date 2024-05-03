@@ -68,10 +68,6 @@
 }
 
 @media (max-width: 768px) {
-    .all-trails {
-        margin-top: 4rem;
-        padding: 0 1rem;
-    }
 
     .filters-wrapper {
         padding: 0 1rem;

@@ -116,10 +116,6 @@
 }
 
 @media (max-width: 768px) {
-    .login-page {
-        margin-top: 5rem;
-    }
-
     .credentials-form {
         padding: 1rem;
     }
