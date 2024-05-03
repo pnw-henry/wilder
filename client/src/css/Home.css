@@ -224,8 +224,7 @@
     }
 
     .search-container {
-        margin-top: -6.5rem;
-
+        margin-top: -5rem;
     }
 
     .home-titles {
@@ -277,10 +276,21 @@
         height: 90vh;
     }
 
+    .home-trails-section,
+    .home-reports-section {
+        max-width: 100%;
+    }
+
+    .home-trails-container,
+    .reports-container {
+        margin: 0;
+        padding: 1em;
+    }
+
     .search-container {
         width: 70%;
         max-width: 40rem;
-        margin-top: -10rem;
+        margin-top: -12rem;
     }
 
     .home input[type="text"] {
@@ -288,14 +298,11 @@
         font-size: 1.5em;
     }
 
-    .trail-preview h2,
-    .trail-preview p {
+    .trail-preview h2 {
         font-size: 1.5em;
-        /* Increase font size for readability */
     }
 
     .home-titles {
-        font-size: 3em;
-        /* Larger titles */
+        font-size: 2em;
     }
 }

@@ -95,3 +95,9 @@
         padding: 0.75rem;
     }
 }
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .all-trails .search-bar {
+        width: 70vw;
+    }
+}

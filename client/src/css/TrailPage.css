@@ -282,3 +282,23 @@ img {
     }
 
 }
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+
+    .trail-summary {
+        align-items: flex-start;
+        justify-content: center;
+        width: 100%;
+        margin: auto;
+    }
+
+    .trail-visuals {
+        width: 100%;
+    }
+
+    .trailpage-reports-section {
+        margin-top: 1rem;
+    }
+
+}
