@@ -51,16 +51,12 @@ class TrailsController < ApplicationController
   end
 
   def home_image
-  # List all objects in the "home" folder
-    home_objects = $s3_client.list_objects_v2(bucket: $bucket_name, prefix: "home/").contents
-  
-  # Find the first object that includes 'main' in the filename
-    main_home_object = home_objects.find { |obj| obj.key.include?("main") }
 
+    home_objects = $s3_client.list_objects_v2(bucket: $bucket_name, prefix: "home/").contents
+    main_home_object = home_objects.find { |obj| obj.key.include?("main") }
     placeholder_trail_image = home_objects.find { |obj| obj.key.include?("placeholder") }
 
     if main_home_object
-    # Generate a presigned URL for the found object
         home_image_url = $presigner.presigned_url(:get_object, bucket: $bucket_name, key: main_home_object.key, expires_in: 3600)
         placeholder_trail_image_url = $presigner.presigned_url(:get_object, bucket: $bucket_name, key: placeholder_trail_image.key, expires_in: 3600)
         render json: { home_image_url: home_image_url, placeholder_trail_image_url: placeholder_trail_image_url}
@@ -76,7 +72,7 @@ class TrailsController < ApplicationController
   end
 
   def trail_params
-    params.permit(:name, :location, :length, :elevation_gain, :highest_point, :difficulty, :dogs, :pass, :summary, :image_url, :latitude, :longitude)
+    params.permit(:name, :location, :length, :elevation_gain, :highest_point, :difficulty, :dogs, :pass, :summary, :image_url, :latitude, :longitude, :place_id)
   end
 
   def find_user

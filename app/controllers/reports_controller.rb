@@ -40,7 +40,7 @@ class ReportsController < ApplicationController
         user = find_user
         report = user.reports.find(params[:id])
         if (user.id != report.user_id)
-            return render json: {error: "You are not authorized to delete this visit"}, status: :unauthorized
+            return render json: {error: "You are not authorized to delete this report"}, status: :unauthorized
         else
             report.destroy
             head :no_content

@@ -109,7 +109,6 @@ function UserProfile() {
             <button onClick={handleLogout}>Logout</button>
           </div>
           <section className="user-favorites-section">
-            <h2 className="profile-heading">Saved Trails</h2>
             {userFavorites.length > 0 ? (
               <div className="favorite-trails-container">
                 <AutoSizer>
@@ -140,7 +139,7 @@ function UserProfile() {
             )}
           </section>
           <section className="profile-trail-reports">
-            <h2 className="profile-heading">Trail Reports</h2>
+            <h2 className="profile-heading">Your Reports</h2>
             <Reports reports={userReports} showName={true} />
             {userReports.length === 0 && (
               <p className="no-entries">You haven't submitted any reports.</p>
