@@ -84,7 +84,9 @@ function TrailPage() {
             <button
               onClick={() =>
                 window.open(
-                  `https://www.google.com/maps/place/?q=place_id:${trail.place_id}`,
+                  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                    `${trail.latitude},${trail.longitude}`
+                  )}&query_place_id=${trail.place_id}`,
                   "_blank"
                 )
               }
