@@ -54,12 +54,12 @@ class TrailsController < ApplicationController
 
     home_objects = $s3_client.list_objects_v2(bucket: $bucket_name, prefix: "home/").contents
     main_home_object = home_objects.find { |obj| obj.key.include?("main") }
-    placeholder_trail_image = home_objects.find { |obj| obj.key.include?("placeholder") }
+    login_home_object = home_objects.find { |obj| obj.key.include?("login") }
 
     if main_home_object
         home_image_url = $presigner.presigned_url(:get_object, bucket: $bucket_name, key: main_home_object.key, expires_in: 3600)
-        placeholder_trail_image_url = $presigner.presigned_url(:get_object, bucket: $bucket_name, key: placeholder_trail_image.key, expires_in: 3600)
-        render json: { home_image_url: home_image_url, placeholder_trail_image_url: placeholder_trail_image_url}
+        login_image_url = $presigner.presigned_url(:get_object, bucket: $bucket_name, key: login_home_object.key, expires_in: 3600)
+        render json: { home_image_url: home_image_url, login_image_url: login_image_url }
     else
         render json: { error: "Main home image not found" }, status: :not_found
     end
