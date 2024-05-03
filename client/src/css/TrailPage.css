@@ -301,4 +301,8 @@ img {
         margin-top: 1rem;
     }
 
+    .trail-information {
+        align-items: center;
+    }
+
 }
