@@ -113,7 +113,7 @@
 @media (max-width: 768px) {
     .user-profile {
         margin-top: 4rem;
-        padding: 0 0.5rem;
+        padding: 0 1rem;
     }
 
     .user-details {

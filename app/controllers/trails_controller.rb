@@ -7,6 +7,7 @@ $image_keys = $trail_objects.map { |obj| [File.basename(obj.key, ".*"), obj.key]
 
 class TrailsController < ApplicationController
   include ActionController::MimeResponds
+
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
 
@@ -15,7 +16,7 @@ class TrailsController < ApplicationController
       trails = Trail.all
       trails_with_images = trails.map do |trail|
         image_key = $image_keys[trail.name]
-        image_url = image_key ? $presigner.presigned_url(:get_object, bucket: $bucket_name, key: image_key, expires_in: 3600) : nil
+        image_url = image_key ? $presigner.presigned_url(:get_object, bucket: $bucket_name, key: image_key, expires_in: 604800) : nil
         trail.as_json(include: [:reports]).merge(image_url: image_url)
       end
 
@@ -34,12 +35,12 @@ class TrailsController < ApplicationController
   def show
     trail = find_trail
     image_key = $image_keys[trail.name]
-    image_url = image_key ? $presigner.presigned_url(:get_object, bucket: $bucket_name, key: image_key, expires_in: 3600) : nil
+    image_url = image_key ? $presigner.presigned_url(:get_object, bucket: $bucket_name, key: image_key, expires_in: 604800) : nil
     trail = trail.as_json(include: [:reports]).merge(image_url: image_url)
     render json: trail
   end
 
-   def update
+  def update
     trail = find_trail
     user = find_user
     if (user.id != 1)
@@ -57,7 +58,7 @@ class TrailsController < ApplicationController
     login_home_object = home_objects.find { |obj| obj.key.include?("login") }
 
     if main_home_object
-        home_image_url = $presigner.presigned_url(:get_object, bucket: $bucket_name, key: main_home_object.key, expires_in: 3600)
+        home_image_url = $presigner.presigned_url(:get_object, bucket: $bucket_name, key: main_home_object.key, expires_in: 604800)
         login_image_url = $presigner.presigned_url(:get_object, bucket: $bucket_name, key: login_home_object.key, expires_in: 3600)
         render json: { home_image_url: home_image_url, login_image_url: login_image_url }
     else
@@ -66,6 +67,42 @@ class TrailsController < ApplicationController
   end
   
   private
+
+  def set_s3_bucket
+    @bucket_name = "wild-loops"
+  end
+
+  def presigned_url_for(trail_name)
+    object = fetch_image_object(trail_name)
+    object ? presigned_url(object.key) : nil
+  end
+
+  def fetch_image_object(trail_name)
+    $s3_client.list_objects_v2(bucket: @bucket_name, prefix: "trails/#{trail_name}").contents.first
+  end
+
+  def presigned_url(key)
+    $presigner.presigned_url(:get_object, bucket: @bucket_name, key: key, expires_in: 604800)
+  end
+
+  def fetch_home_images
+    home_objects = $s3_client.list_objects_v2(bucket: @bucket_name, prefix: "home/").contents
+    [home_objects.find { |obj| obj.key.include?("main") }, home_objects.find { |obj| obj.key.include?("login") }]
+  end
+
+  def serve_html_file
+    file_path = Rails.root.join('public', 'index.html')
+    if File.exist?(file_path)
+      send_file(file_path, type: 'text/html', disposition: 'inline')
+    else
+      raise ActionController::RoutingError, 'Not Found'
+    end
+  end
+
+  def authorized_user?
+    user = find_user
+    user.id == 1
+  end
 
   def find_trail
     Trail.find(params[:id])

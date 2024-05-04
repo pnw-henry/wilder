@@ -25,6 +25,8 @@ function TrailPage() {
     window.scrollTo(0, 0);
   }, [trail]);
 
+  console.log("trail", trail);
+
   useEffect(() => {
     setLoading(true);
     const foundTrail = trails.find((t) => t.id.toString() === trailId);
@@ -124,12 +126,14 @@ function TrailPage() {
       </div>
       <div className="trail-content">
         <div className="trail-visuals">
-          <img
-            src={trail.image_url}
-            onContextMenu={(e) => e.preventDefault()}
-            alt={trail.name}
-          />
-          {user && (
+          {trail.image_url && (
+            <img
+              src={trail.image_url}
+              alt={trail.name}
+              className="trail-image"
+            ></img>
+          )}
+          {user && !loading && (
             <div className="favorite-toggle">
               <FavoritesToggle trailId={trail.id} />
             </div>
