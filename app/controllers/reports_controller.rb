@@ -29,7 +29,7 @@ class ReportsController < ApplicationController
         user = find_user
         report = user.reports.find(params[:id])
         if (user.id != report.user_id)
-            return render json: {error: "You are not authorized to edit this visit"}, status: :unauthorized
+            return render json: {error: "You are not authorized to edit this report"}, status: :unauthorized
         else
             report.update!(report_params)
             render json: report, status: :ok

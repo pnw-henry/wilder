@@ -2,8 +2,6 @@
 $s3_client = Aws::S3::Client.new
 $bucket_name = "wild-loops"
 $presigner = Aws::S3::Presigner.new(client: $s3_client)
-$trail_objects = $s3_client.list_objects_v2(bucket: $bucket_name, prefix: "trails/").contents
-$image_keys = $trail_objects.map { |obj| [File.basename(obj.key, ".*"), obj.key] }.to_h
 
 class TrailsController < ApplicationController
   include ActionController::MimeResponds
@@ -15,62 +13,44 @@ class TrailsController < ApplicationController
   def index
       trails = Trail.all
       trails_with_images = trails.map do |trail|
-        image_key = $image_keys[trail.name]
-        image_url = image_key ? $presigner.presigned_url(:get_object, bucket: $bucket_name, key: image_key, expires_in: 604800) : nil
+        image_url = presigned_url_for(trail.name)
         trail.as_json(include: [:reports]).merge(image_url: image_url)
       end
 
-    if request.format.json?
-      render json: trails_with_images
-    else
-      file_path = Rails.root.join('public', 'index.html')
-        if File.exist?(file_path)
-          send_file(file_path, type: 'text/html', disposition: 'inline')
-        else
-          raise ActionController::RoutingError, 'Not Found'
-        end
+    respond_to do |format|
+      format.json { render json: trails_with_images}
+      format.html { serve_html_file}
     end
   end
 
   def show
     trail = find_trail
-    image_key = $image_keys[trail.name]
-    image_url = image_key ? $presigner.presigned_url(:get_object, bucket: $bucket_name, key: image_key, expires_in: 604800) : nil
+    image_url = presigned_url_for(trail.name)
     trail = trail.as_json(include: [:reports]).merge(image_url: image_url)
     render json: trail
   end
 
   def update
+    return render json: { error: "You can't edit a trail"}, status: :unauthorized unless authorized_user?
+    
     trail = find_trail
-    user = find_user
-    if (user.id != 1)
-      return render json: {error: "You are not authorized to edit this trail"}, status: :unauthorized
-    else
-      trail.update!(trail_params)
-      render json: trail, status: :ok
-    end
+    trail.update!(trail_params)
+    render json: trail, status: :ok
   end
 
-  def home_image
-
-    home_objects = $s3_client.list_objects_v2(bucket: $bucket_name, prefix: "home/").contents
-    main_home_object = home_objects.find { |obj| obj.key.include?("main") }
-    login_home_object = home_objects.find { |obj| obj.key.include?("login") }
-
-    if main_home_object
-        home_image_url = $presigner.presigned_url(:get_object, bucket: $bucket_name, key: main_home_object.key, expires_in: 604800)
-        login_image_url = $presigner.presigned_url(:get_object, bucket: $bucket_name, key: login_home_object.key, expires_in: 3600)
-        render json: { home_image_url: home_image_url, login_image_url: login_image_url }
+   def home_image
+    main_home_object, login_home_object = fetch_home_images
+    if main_home_object && login_home_object
+      render json: {
+        home_image_url: presigned_url(main_home_object.key),
+        login_image_url: presigned_url(login_home_object.key)
+      }
     else
-        render json: { error: "Main home image not found" }, status: :not_found
+      render json: { error: "Main home image not found" }, status: :not_found
     end
   end
   
   private
-
-  def set_s3_bucket
-    @bucket_name = "wild-loops"
-  end
 
   def presigned_url_for(trail_name)
     object = fetch_image_object(trail_name)
@@ -78,15 +58,15 @@ class TrailsController < ApplicationController
   end
 
   def fetch_image_object(trail_name)
-    $s3_client.list_objects_v2(bucket: @bucket_name, prefix: "trails/#{trail_name}").contents.first
+    $s3_client.list_objects_v2(bucket: $bucket_name, prefix: "trails/#{trail_name}").contents.first
   end
 
   def presigned_url(key)
-    $presigner.presigned_url(:get_object, bucket: @bucket_name, key: key, expires_in: 604800)
+    $presigner.presigned_url(:get_object, bucket: $bucket_name, key: key, expires_in: 604800)
   end
 
   def fetch_home_images
-    home_objects = $s3_client.list_objects_v2(bucket: @bucket_name, prefix: "home/").contents
+    home_objects = $s3_client.list_objects_v2(bucket: $bucket_name, prefix: "home/").contents
     [home_objects.find { |obj| obj.key.include?("main") }, home_objects.find { |obj| obj.key.include?("login") }]
   end
 
