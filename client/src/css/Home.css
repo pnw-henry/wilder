@@ -55,7 +55,8 @@
 .home input[type="text"] {
     width: 100%;
     background-color: rgba(230, 230, 230, 0.78);
-    border: solid 1px hsl(0, 0%, 100%);
+    border: solid 1px hsla(0, 0%, 100%, 0.818);
+    font-weight: 600;
     border-radius: 1.5rem;
     padding: 1.2rem 1.5rem;
     font-size: 1em;
