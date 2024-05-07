@@ -131,6 +131,7 @@ function TrailPage() {
               src={trail.image_url}
               alt={trail.name}
               className="trail-image"
+              style={{ pointerEvents: "none", userSelect: "none" }}
             ></img>
           )}
           {user && !loading && (

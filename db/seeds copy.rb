@@ -624,6 +624,17 @@ mount_washington = Trail.create!(
 <p><strong>Additional Tips</strong><br>This 4-mile round trip hike has a substantial elevation gain of 3190 feet, rated as hard. Dogs are allowed on the trail, but they should be fit for steep, challenging terrain. Due to the intense incline and potentially hazardous trail conditions, proper hiking boots and trekking poles are highly recommended. Hikers should bring sufficient water and snacks and be prepared for variable weather conditions, especially at higher elevations.</p>"
 )
 
+easy_pass = Trail.create!(
+  name: "Easy Pass",
+  location: "Mazama, WA",
+  intensity: "Hard",
+  length: 7.0,
+  elevation_gain: 2800,
+  highest_point: 6500,
+  dogs: true,
+  pass: "Northwest Forest",
+  summary: ""
+
 
 #Reports
 
