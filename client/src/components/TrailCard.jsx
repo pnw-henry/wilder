@@ -28,6 +28,7 @@ function TrailCard({ trail, isProfile }) {
               onContextMenu={(e) => e.preventDefault()}
               alt={name}
               className="trail-image"
+              loading="lazy"
             />
           </Link>
         )}

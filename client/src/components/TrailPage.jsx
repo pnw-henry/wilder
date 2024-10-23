@@ -25,8 +25,6 @@ function TrailPage() {
     window.scrollTo(0, 0);
   }, [trail]);
 
-  console.log("trail", trail);
-
   useEffect(() => {
     setLoading(true);
     const foundTrail = trails.find((t) => t.id.toString() === trailId);
